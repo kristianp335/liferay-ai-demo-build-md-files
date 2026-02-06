@@ -1,3 +1,5 @@
+**WARNING: This document contains code snippets that demonstrate API interaction. Ensure all credentials (e.g., LIFERAY_HOST, LIFERAY_USERNAME, LIFERAY_PASSWORD) are handled securely and are never hardcoded in production environments. Use environment variables or a secure configuration management system.**
+
 # Liferay Object Creation and Population Guide
 
 ## Overview
@@ -29,11 +31,8 @@ import os
 import uuid
 
 # --- Configuration ---
-# User-provided Liferay instance details
-LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
-LIFERAY_USERNAME = "nick@boots.com"
-LIFERAY_PASSWORD = "Gloria1234!"
-COMPANY_ID = os.getenv("COMPANY_ID", "20123") # Default Liferay company ID
+LIFERAY_USERNAME = "your.username@liferay.com"
+LIFERAY_PASSWORD = "your-liferay-password"
 
 # --- Object Definition Payload ---
 email_object_definition = {
@@ -229,9 +228,9 @@ import json
 import os
 
 # --- Configuration ---
-LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
-LIFERAY_USERNAME = "nick@boots.com"
-LIFERAY_PASSWORD = "Gloria1234!"
+LIFERAY_HOST = "https://your-liferay-instance.com"
+LIFERAY_USERNAME = "your.username@liferay.com"
+LIFERAY_PASSWORD = "your-liferay-password"
 
 # Object ID of the Email object created previously
 OBJECT_DEFINITION_ID = 156560 # From previous output
@@ -300,9 +299,9 @@ import json
 import os
 
 # --- Configuration ---
-LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
-LIFERAY_USERNAME = "nick@boots.com"
-LIFERAY_PASSWORD = "Gloria1234!"
+LIFERAY_HOST = "https://your-liferay-instance.com"
+LIFERAY_USERNAME = "your.username@liferay.com"
+LIFERAY_PASSWORD = "your-liferay-password"
 
 # Object ID of the Email object
 OBJECT_DEFINITION_ID = 156560
@@ -394,9 +393,9 @@ from datetime import datetime, timedelta
 import uuid
 
 # --- Configuration ---
-LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
-LIFERAY_USERNAME = "nick@boots.com"
-LIFERAY_PASSWORD = "Gloria1234!"
+LIFERAY_HOST = "https://your-liferay-instance.com"
+LIFERAY_USERNAME = "your.username@liferay.com"
+LIFERAY_PASSWORD = "your-liferay-password"
 
 # Get the Object ID from the successfully created object
 # You can also get this from the .gemini/Object_Definition_Email_156560.json file

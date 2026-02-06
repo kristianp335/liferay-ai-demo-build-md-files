@@ -74,9 +74,9 @@ Configure your AI tool (Cursor, Claude Desktop, etc.) with these settings:
 |---------|-------|
 | URL | `http://localhost:8080/o/mcp/sse` |
 | Transport | HTTP Server Sent Events (SSE) |
-| Authorization Header | `Basic dGVzdEBsaWZlcmF5LmNvbTp0ZXN0` |
+| Authorization Header | `Basic <YOUR_BASE64_ENCODED_USERNAME_PASSWORD_PAIR>` |
 
-The default credentials (`test@liferay.com:test`) are base64-encoded in the header. Update if using different credentials.
+The default credentials (`test@liferay.com:test`) are base64-encoded in the header. **It is crucial to replace this with securely configured credentials for any production or shared environment.**
 
 #### Available MCP Tools
 Once connected, the AI can use Liferay-provided tools to:
