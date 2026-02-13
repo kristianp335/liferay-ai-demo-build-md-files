@@ -1,5 +1,3 @@
-**WARNING: This document contains code snippets that demonstrate API interaction. Ensure all credentials (e.g., LIFERAY_HOST, LIFERAY_USERNAME, LIFERAY_PASSWORD) are handled securely and are never hardcoded in production environments. Use environment variables or a secure configuration management system.**
-
 # Liferay Object Creation and Population Guide
 
 ## Overview
@@ -31,8 +29,11 @@ import os
 import uuid
 
 # --- Configuration ---
-LIFERAY_USERNAME = "your.username@liferay.com"
-LIFERAY_PASSWORD = "your-liferay-password"
+# User-provided Liferay instance details
+LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
+LIFERAY_USERNAME = "nick@boots.com"
+LIFERAY_PASSWORD = "Gloria1234!"
+COMPANY_ID = os.getenv("COMPANY_ID", "20123") # Default Liferay company ID
 
 # --- Object Definition Payload ---
 email_object_definition = {
@@ -228,9 +229,9 @@ import json
 import os
 
 # --- Configuration ---
-LIFERAY_HOST = "https://your-liferay-instance.com"
-LIFERAY_USERNAME = "your.username@liferay.com"
-LIFERAY_PASSWORD = "your-liferay-password"
+LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
+LIFERAY_USERNAME = "nick@boots.com"
+LIFERAY_PASSWORD = "Gloria1234!"
 
 # Object ID of the Email object created previously
 OBJECT_DEFINITION_ID = 156560 # From previous output
@@ -299,9 +300,9 @@ import json
 import os
 
 # --- Configuration ---
-LIFERAY_HOST = "https://your-liferay-instance.com"
-LIFERAY_USERNAME = "your.username@liferay.com"
-LIFERAY_PASSWORD = "your-liferay-password"
+LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
+LIFERAY_USERNAME = "nick@boots.com"
+LIFERAY_PASSWORD = "Gloria1234!"
 
 # Object ID of the Email object
 OBJECT_DEFINITION_ID = 156560
@@ -393,9 +394,9 @@ from datetime import datetime, timedelta
 import uuid
 
 # --- Configuration ---
-LIFERAY_HOST = "https://your-liferay-instance.com"
-LIFERAY_USERNAME = "your.username@liferay.com"
-LIFERAY_PASSWORD = "your-liferay-password"
+LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
+LIFERAY_USERNAME = "nick@boots.com"
+LIFERAY_PASSWORD = "Gloria1234!"
 
 # Get the Object ID from the successfully created object
 # You can also get this from the .gemini/Object_Definition_Email_156560.json file
@@ -533,4 +534,37 @@ def populate_email_object(num_records=200):
 
 if __name__ == "__main__":
     populate_email_object(num_records=200)
+
+## Working with Relationship Fields
+
+When an Object has a relationship to another Liferay entity (like an Account), a special field is created. The naming convention for this field is typically `r_{relationshipName}_{relatedObject}Id`.
+
+### Populating the Relationship Field
+
+Based on recent testing, to link an object entry to another entity upon creation, you need to provide the ID of the related entity as a direct integer value. You do not need to wrap it in a JSON object.
+
+-   **Field Name:** `r_accountToEmail_accountEntryId`
+-   **Value:** The integer ID of the account (e.g., `38660`)
+
+**Example Payload:**
+```json
+{
+    "sender": "test@example.com",
+    "subject": "Test with Relationship",
+    "r_accountToEmail_accountEntryId": 38660,
+    ...
+}
+```
+
+### Fetching Related Entity Data
+
+After creating an entry, your application will often need to retrieve the details of the related entity (e.g., get the Account Name for the `accountId` you stored). To do this, you must make a separate API call to the appropriate headless API for that entity.
+
+-   **API to use:** Headless Admin User API
+-   **Endpoint to get an Account by ID:** `/o/headless-admin-user/v1.0/accounts/{accountId}`
+
+**Workflow:**
+1.  Fetch the Object Entry (e.g., an "Email" entry).
+2.  Extract the ID from the relationship field (e.g., the value of `r_accountToEmail_accountEntryId`).
+3.  Make a `GET` request to `/o/headless-admin-user/v1.0/accounts/{the-extracted-id}` to get the details of the linked account.
 ```

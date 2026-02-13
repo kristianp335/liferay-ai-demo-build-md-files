@@ -95,6 +95,10 @@ This guide provides comprehensive documentation for building B2B commerce system
 
 ## External Dependencies
 
+**User and Account Management:**
+- **Headless Admin User API**: Used for fetching user and account information.
+- **Get Account by ID**: `/o/headless-admin-user/v1.0/accounts/{accountId}`
+
 **Liferay Commerce Platform:**
 - **Liferay Commerce Headless APIs**: Core API for product, catalog, and specification management
 - **Headless Commerce Admin Catalog v1.0**: Primary API endpoints for all commerce operations
