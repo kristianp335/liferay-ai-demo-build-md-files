@@ -4,6 +4,183 @@ This document provides a reference for the valid `type` values that can be used 
 
 > **IMPORTANT NOTE:** Types such as `image`, `link`, and `rich-text` are **not valid** for this configuration file. They will cause import errors. Content like images, links, and rich text should be made editable directly in the `index.html` file using the `data-lfr-editable-type` attribute. Refer to `FRAGMENT_LFR_EDITABLE_TYPES.md` for more information.
 
+## Complete JSON Example
+
+This is a complete `configuration.json` file example for reference.
+
+```json
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "block",
+          "label": "content-display",
+          "name": "contentDisplay",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "Block",
+                "value": "block"
+              },
+              {
+                "label": "flex-row",
+                "value": "flex-row"
+              },
+              {
+                "label": "flex-column",
+                "value": "flex-column"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "nowrap",
+          "label": "flex-wrap",
+          "name": "flexWrap",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "nowrap",
+                "value": "nowrap"
+              },
+              {
+                "label": "wrap",
+                "value": "wrap"
+              },
+              {
+                "label": "wrap-reverse",
+                "value": "wrap-reverse"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "stretch",
+          "label": "align-items",
+          "name": "alignItems",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "start",
+                "value": "start"
+              },
+              {
+                "label": "center[alignment]",
+                "value": "center"
+              },
+              {
+                "label": "end",
+                "value": "end"
+              },
+              {
+                "label": "stretch",
+                "value": "stretch"
+              },
+              {
+                "label": "baseline",
+                "value": "baseline"
+              }
+            ]
+          }
+        },
+        {
+          "dataType": "string",
+          "defaultValue": "start",
+          "label": "justify-content",
+          "name": "justifyContent",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "start",
+                "value": "start"
+              },
+              {
+                "label": "center[alignment]",
+                "value": "center"
+              },
+              {
+                "label": "end",
+                "value": "end"
+              },
+              {
+                "label": "between",
+                "value": "between"
+              },
+              {
+                "label": "around",
+                "value": "around"
+              }
+            ]
+          }
+        },
+        {
+          "defaultValue": "var(--spacer-2, .5rem)",
+          "label": "flex-gap",
+          "name": "flexGap",
+          "type": "length"
+        },
+        {
+          "name": "allowMenuOverride",
+          "label": "allow-menu-override",
+          "type": "checkbox",
+          "defaultValue": true
+        }
+      ],
+      "label": "layout"
+    },
+    {
+      "fields": [
+        {
+          "dataType": "string",
+          "defaultValue": "increase-hamburger",
+          "label": "logo-adaption",
+          "name": "logoAdaption",
+          "type": "select",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "reduce-logo",
+                "value": "reduce-logo"
+              },
+              {
+                "label": "increase-hamburger",
+                "value": "increase-hamburger"
+              }
+            ]
+          }
+        },
+        {
+          "name": "alwaysDisplayLogo",
+          "label": "always-display-logo",
+          "type": "checkbox",
+          "defaultValue": false
+        }
+      ],
+      "label": "logo"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": true,
+          "label": "logo-zone-header",
+          "name": "logoZoneHeader",
+          "type": "checkbox"
+        }
+      ],
+      "label": "editor"
+    }
+  ]
+}
+```
+
 ## `text`
 
 A basic, single-line text input field.
