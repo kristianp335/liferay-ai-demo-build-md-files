@@ -105,6 +105,15 @@ If an HTML element has `data-lfr-editable-id` and `data-lfr-editable-type` attri
 
 **For a complete list of valid editable types, see [LFR_EDITABLE_TYPES.md](LFR_EDITABLE_TYPES.md).**
 
+### Fragment Drop Zones (`lfr-drop-zone`)
+
+The `<lfr-drop-zone>` tag is used to create areas within a fragment where other fragments or widgets can be dropped. This is essential for layout or container fragments.
+
+**Key Requirements:**
+- **Tag Name:** Must be `<lfr-drop-zone>` (not `lfr-dropzone`).
+- **Unique ID:** Every drop zone must have a unique `id` attribute (e.g., `<lfr-drop-zone id="my-zone-1"></lfr-drop-zone>`).
+- **Edit Mode Styling:** It is a best practice to add CSS that makes empty drop zones visible during editing (e.g., using a dashed border and a label) so content editors can easily find them.
+
 ## 4. Common Configuration Pitfalls
 
 To avoid the most common import errors, follow these rules.

@@ -93,4 +93,22 @@ Triggers an object action, such as downloading a file or initiating a workflow.
 <button data-lfr-editable-id="my-action-button" data-lfr-editable-type="action">
   Download Report
 </button>
+
+## 7. `lfr-drop-zone`
+
+While not a `data-lfr-editable-type` attribute value, the `<lfr-drop-zone>` tag is a critical structural element that allows content editors to drag and drop other fragments or widgets *inside* your fragment.
+
+-   **HTML Tag:** `<lfr-drop-zone>`
+-   **Attributes:**
+    -   `id` (Required): A unique identifier for the drop zone within the fragment.
+-   **Usage:** Used to create flexible layouts where a fragment acts as a container for other content.
+
+### Example:
+
+```html
+<div class="my-container-fragment">
+  <h2>My Container</h2>
+  <lfr-drop-zone id="my-unique-drop-zone-id"></lfr-drop-zone>
+</div>
+```
 ```
