@@ -1,67 +1,58 @@
-# Gemini CLI Demo Build Documentation
+# Liferay AI Demo Build - Skills-Based Architecture
 
-This directory (`demo-build-md-files`) contains a curated set of Markdown documentation files that are leveraged by the Gemini CLI agent to provide context and guidance for various Liferay development tasks.
+Welcome to the Liferay AI Demo Build repository. This project has transitioned from a static file-based context to a **Skills-Based Architecture** using the Gemini CLI.
 
----
+## Why We Moved from MD Files to Skills
 
-## How Markdown Files Provide Context (via `settings.json`)
+Previously, we used `settings.json` to load multiple Markdown files into the agent's context. We have moved to **Skills** for several critical reasons:
 
-The Gemini CLI agent utilizes a `settings.json` file (typically located in `.gemini/settings.json`) to define which documentation files are relevant for its context. By listing Markdown files in this `settings.json` under `context.fileName`, these documents become part of the agent's knowledge base, allowing it to understand project conventions, best practices, and Liferay-specific requirements.
-
-For example, a `settings.json` might look like this:
-
-```json
-{
-  "context": {
-    "fileName": [
-      "LIFERAY_FRAGMENT_DEVELOPMENT_GUIDE.md",
-      "LIFERAY_BEST_PRACTICES.md",
-      "NANOBANANA_GUIDE.md",
-      "WHO_YOU_ARE.md"
-      // ... other .md files
-    ]
-  }
-}
-```
-
-This mechanism ensures the agent has up-to-date and relevant information specific to your project's ecosystem.
+1.  **Surgical Context Management**: Instead of loading every guide at once, we activate specific skills on-demand. This keeps the context window lean and high-signal, preventing "context fatigue" and ensuring more accurate responses.
+2.  **Expert Procedural Guidance**: Skills aren't just documentation; they are active "expert modes." When a skill is activated, the agent receives specialized instructions and workflows that prioritize project-specific best practices.
+3.  **Tool & Script Integration**: Skills are tightly coupled with utility scripts (e.g., Python scripts for image generation or DOM scraping), providing a seamless bridge between knowledge and execution.
+4.  **Modular Scalability**: Adding new capabilities (like a new API or a specific design system) is as simple as creating a new skill folder without cluttering the global `settings.json`.
 
 ---
 
-## Prompting the Gemini CLI Agent for Liferay Development Tasks
+## Available Skills
 
-The Gemini CLI agent is designed to assist with various software engineering tasks, including analyzing websites, creating Liferay fragments, and managing client extensions. Here are examples of how to effectively prompt the agent:
+The following skills are available and can be activated by name:
 
-### 1. Copying Site Designs and Building Fragments
+### 1. `liferay-development`
+Expert guidance for building Liferay fragments and client extensions.
+- **Use for**: HTML structure, CSS token mapping (Liferay Classic), `configuration.json` schemas, and `data-lfr-editable` attributes.
+- **Key References**: Best practices, configuration types, and Stylebook tokens.
 
-To instruct the agent to analyze a website and build Liferay fragments based on its design, provide a clear request that includes the target URL and specific requirements.
+### 2. `generate-images`
+Workflow management for the `imagen-4.0-generate-001` model.
+- **Use for**: Generating high-quality visual assets, enforcing aspect ratios (16:9), and optimizing for web (1K resolution).
+- **Key References**: Imagen 4 API usage and Pillow-based image processing.
 
-**Example Prompt:**
-> "Create Liferay fragments and CSS for the site `www.example.com`. Go to the site and understand its layout. Make sure to capture the main header, a hero section, and a product card component. The global CSS should adhere to Liferay Classic CSS variables for colors."
+### 3. `liferay-admin`
+Procedural knowledge for Liferay workspace setup and deployment.
+- **Use for**: Environment configuration, zipping collections, and Lighthouse performance optimization (90+ scores).
+- **Key References**: Deployment guides and performance strategies.
 
-**What the Agent Will Do:**
-*   Attempt to analyze `www.example.com` (using tools like `web_fetch` or Playwright for DOM extraction).
-*   Identify distinct visual components on the site.
-*   Propose a plan for creating Liferay fragments (e.g., `header`, `hero`, `product-card`) and a global CSS.
-*   Implement the fragments, including `fragment.json`, `configuration.json`, `index.html`, `index.css`, `index.js`, and `thumbnail.png`.
-*   Create a global CSS client extension, mapping site colors to Liferay Classic CSS variables.
-*   Package the fragments into a Liferay-compatible ZIP file.
-*   Provide deployment instructions.
+### 4. `liferay-commerce-objects`
+Specialized workflows for Liferay Headless APIs.
+- **Use for**: Managing B2B catalogs, SKUs, and programmatically defining Liferay Object Definitions.
+- **Key References**: Commerce API guide and Object population workflows.
 
-### 2. Including Existing Header Fragments (e.g., from `.gemini` folder)
-
-If you have an existing fragment (like a feature-rich header) in your `.gemini` folder that you want to integrate into a new fragment collection without altering its core functionality, provide explicit instructions.
-
-**Example Prompt:**
-> "For the header, use the `ef-header` fragment in `.gemini/ef-header`. Do not change any of its functionality, only styling. Update its styling to match the new site's theme."
-
-**What the Agent Will Do:**
-*   Locate the specified header fragment (e.g., `.gemini/ef-header/ef-header`).
-*   Copy all its files (`index.html`, `index.css`, `index.js`, etc.) into the new fragment collection under a new name (e.g., `o2-header`).
-*   **Crucially, it will preserve the original `index.js` and HTML structure to maintain functionality.**
-*   Modify only the `index.css` of the copied fragment to update its visual appearance based on the new site's theme and global CSS variables, ensuring that no functional code is touched.
-*   Update the fragment's `fragment.json` to reflect the new name (e.g., `o2-header`).
+### 5. `playwright-scraper`
+Headless browser automation for deep DOM extraction.
+- **Use for**: Capturing JavaScript-rendered content for accurate site analysis and fragment recreation.
+- **Key References**: Playwright setup and DOM capture scripts.
 
 ---
 
-This README aims to clarify how documentation and interaction patterns are handled within this environment, ensuring effective collaboration with the Gemini CLI agent for Liferay development.
+## How to Interact with Skills
+
+You can ask Shirley (your AI assistant) to activate a skill or simply describe your task, and she will activate the appropriate expert mode.
+
+**Example Prompts:**
+- *"Activate the `liferay-development` skill and help me build a hero fragment."*
+- *"Use the `generate-images` skill to create a 16:9 banner for a new site."*
+- *"I need to deploy these fragments. Help me with the `liferay-admin` workflows."*
+
+---
+
+This architecture ensures that Shirley remains a focused, expert partner in building creative Liferay demos.

@@ -173,7 +173,7 @@ To prevent styles from one fragment affecting others, you **must manually add a 
 
 ## 6. Asset Management
 
--   **Generate Placeholders:** Use the `nanobanana` tool (`generate_image`, `generate_icon`) to create default placeholder images for your fragment content and to generate a `thumbnail.png` for each fragment.
+-   **Generate Placeholders:** Use the `generate-images` skill to create default placeholder images for your fragment content and to generate a `thumbnail.png` for each fragment.
 -   **Storage Location:** All static assets (images, SVGs, etc.) **must** be placed in the `resources/` directory at the root of the fragment collection.
 -   **Reference Syntax:** To reference a resource from within a fragment's `index.html`, use the `[resources:filename.ext]` syntax.
 -   **Do Not Use Relative Paths:** Never use relative paths (e.g., `../../resources/image.png`). This will fail upon deployment.
@@ -226,11 +226,11 @@ When working with icons in Liferay fragments, prioritize performance and maintai
     -   `create_client_extension_zip.py`: Used to package client extensions.
 -   **Do Not Use Standard OS Tools:** Standard OS zipping tools can create archives that Liferay will silently fail to import.
 
-## 8. Image Generation with `nanobanana`
+## 8. Image Generation with `generate-images`
 
--   **Size Limitation for `/generate`:** The `generate_image` tool consistently produces images at a fixed resolution of 1024x1024.
--   **Workaround:** Generate images at the default 1024x1024 size. The user must manually resize or crop the image after generation.
--   **For more details, see [nanobanana_guide.md](nanobanana_guide.md).**
+-   **API Limitations:** The default image tools may not be sufficient. Use the `generate-images` skill and the Imagen 4 Python API for better control.
+-   **Capabilities:** The Imagen 4 API supports different resolutions (1K, 2K) and native aspect ratios (1:1, 16:9, etc.).
+-   **For more details, see [IMAGEN_4_GUIDE.md](../../generate-images/references/IMAGEN_4_GUIDE.md).**
 
 ## 9. Full DOM Extraction with `playwright`
 
