@@ -56,3 +56,9 @@ You can ask Shirley (your AI assistant) to activate a skill or simply describe y
 ---
 
 This architecture ensures that Shirley remains a focused, expert partner in building creative Liferay demos.
+
+---
+
+## How to Install
+
+To use these skills in your own project, simply copy the `.gemini` folder from this repository and paste it into the root of your Liferay working directory. This will allow Shirley to access all the specialized expert modes and configurations defined here. Make sure the WHO_ARE_YOU.md file is in the working directory also.
