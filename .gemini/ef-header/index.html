@@ -1,0 +1,192 @@
+<div class="ef-header-fragment">
+  <header class="ef-header" data-style="${configuration.headerStyle}">
+    <div class="ef-container">
+      <div class="ef-header-content">
+        <!-- Logo -->
+        <div class="ef-header-logo">
+          <a href="/" class="ef-logo-link">
+            <img 
+              src="[resources:everflow-logo.png]"
+              alt="Everflow Logo"
+              class="ef-logo"
+              data-lfr-editable-id="logo"
+              data-lfr-editable-type="image"
+              width="180"
+              height="40"
+            />
+          </a>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="ef-nav" role="navigation" aria-label="Main navigation">
+          <ul class="ef-nav-list" id="ef-main-nav">
+            <!-- Navigation will be populated by JavaScript -->
+          </ul>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="ef-header-actions">
+          <!-- Mobile Menu Toggle -->
+          <button class="ef-mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+            <span class="ef-hamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+
+          [#if configuration.showSearch]
+          <!-- Search Button -->
+          <button class="ef-header-action-btn ef-search-btn" aria-label="Open search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+              <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+          [/#if]
+
+          [#if configuration.showUserMenu]
+          <!-- Login/User Button -->
+          [#if themeDisplay.isSignedIn()]
+            <div class="ef-user-profile-widget">
+              [@liferay.user_personal_bar /]
+            </div>
+          [#else]
+            <button class="ef-header-action-btn ef-login-btn" aria-label="Sign in">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" stroke="currentColor" stroke-width="2"/>
+                <polyline points="10,17 15,12 10,7" stroke="currentColor" stroke-width="2"/>
+                <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <span>Sign In</span>
+            </button>
+          [/#if]
+          [/#if]
+
+          <!-- Language Selector Dropzone -->
+          <div class="ef-language-selector-dropzone">
+            <lfr-drop-zone data-lfr-drop-zone-id="language-selector">
+            </lfr-drop-zone>
+          </div>
+
+          <!-- Account Selector Dropzone - NEW for ef -->
+          <div class="ef-account-selector-dropzone">
+            <lfr-drop-zone data-lfr-drop-zone-id="account-selector">
+            </lfr-drop-zone>
+          </div>
+
+          <!-- Commerce Cart Dropzone -->
+          <div class="ef-commerce-cart-dropzone">
+            <lfr-drop-zone data-lfr-drop-zone-id="commerce-cart">
+            </lfr-drop-zone>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mega Menu Dropzones (Edit Mode Only) -->
+      <div class="ef-mega-menu-dropzones ef-edit-mode-only">
+        <div class="ef-mega-dropzone" data-menu-item="1">
+          <h4 class="ef-mega-dropzone-label">Mega Menu Content 1</h4>
+          <div id="dropzone-mega-menu-1">
+            <lfr-drop-zone data-lfr-drop-zone-id="mega-menu-1">
+            </lfr-drop-zone>
+          </div>
+        </div>
+        <div class="ef-mega-dropzone" data-menu-item="2">
+          <h4 class="ef-mega-dropzone-label">Mega Menu Content 2</h4>
+          <div id="dropzone-mega-menu-2">
+            <lfr-drop-zone data-lfr-drop-zone-id="mega-menu-2">
+            </lfr-drop-zone>
+          </div>
+        </div>
+        <div class="ef-mega-dropzone" data-menu-item="3">
+          <h4 class="ef-mega-dropzone-label">Mega Menu Content 3</h4>
+          <div id="dropzone-mega-menu-3">
+            <lfr-drop-zone data-lfr-drop-zone-id="mega-menu-3">
+            </lfr-drop-zone>
+          </div>
+        </div>
+        <div class="ef-mega-dropzone" data-menu-item="4">
+          <h4 class="ef-mega-dropzone-label">Mega Menu Content 4</h4>
+          <div id="dropzone-mega-menu-4">
+            <lfr-drop-zone data-lfr-drop-zone-id="mega-menu-4">
+            </lfr-drop-zone>
+          </div>
+        </div>
+        <div class="ef-mega-dropzone" data-menu-item="5">
+          <h4 class="ef-mega-dropzone-label">Mega Menu Content 5</h4>
+          <div id="dropzone-mega-menu-5">
+            <lfr-drop-zone data-lfr-drop-zone-id="mega-menu-5">
+            </lfr-drop-zone>
+          </div>
+        </div>
+        <div class="ef-mega-dropzone" data-menu-item="6">
+          <h4 class="ef-mega-dropzone-label">Mega Menu Content 6</h4>
+          <div id="dropzone-mega-menu-6">
+            <lfr-drop-zone data-lfr-drop-zone-id="mega-menu-6">
+            </lfr-drop-zone>
+          </div>
+        </div>
+        <div class="ef-mega-dropzone" data-menu-item="7">
+          <h4 class="ef-mega-dropzone-label">Mega Menu Content 7</h4>
+          <div id="dropzone-mega-menu-7">
+            <lfr-drop-zone data-lfr-drop-zone-id="mega-menu-7">
+            </lfr-drop-zone>
+          </div>
+        </div>
+        <div class="ef-mega-dropzone" data-menu-item="8">
+          <h4 class="ef-mega-dropzone-label">Mega Menu Content 8</h4>
+          <div id="dropzone-mega-menu-8">
+            <lfr-drop-zone data-lfr-drop-zone-id="mega-menu-8">
+            </lfr-drop-zone>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div class="ef-mobile-nav" id="ef-mobile-nav">
+        <ul class="ef-mobile-nav-list">
+          <!-- Mobile navigation will be populated by JavaScript -->
+        </ul>
+        <div class="ef-mobile-nav-actions">
+          [#if !themeDisplay.isSignedIn()]
+            <button class="ef-btn ef-mobile-login-btn">Sign In</button>
+          [#else]
+            <a href="/c/portal/logout" class="ef-btn ef-btn-secondary">Sign Out</a>
+          [/#if]
+        </div>
+      </div>
+    </div>
+  </header>
+
+  [#if configuration.showSearch]
+  <!-- Search Modal -->
+  <div id="ef-search-overlay" class="ef-search-overlay" style="display: none;">
+    <div class="ef-search-modal">
+      <div class="ef-modal-header">
+        <h3 class="ef-modal-title" data-lfr-editable-id="search-title" data-lfr-editable-type="text">Search Everflow</h3>
+        <button id="ef-close-search" class="ef-modal-close" aria-label="Close search">&times;</button>
+      </div>
+      <div class="ef-modal-body search-content">
+        <lfr-drop-zone data-lfr-drop-zone-id="search">
+        </lfr-drop-zone>
+      </div>
+    </div>
+  </div>
+  [/#if]
+
+  <!-- Login Modal -->
+  [#if !themeDisplay.isSignedIn() && configuration.showUserMenu]
+    <div id="ef-login-overlay" class="ef-login-overlay" style="display: none;">
+      <div class="ef-login-modal">
+        <div class="ef-modal-header">
+          <h3 class="ef-modal-title" data-lfr-editable-id="login-title" data-lfr-editable-type="text">Sign In to Everflow</h3>
+          <button id="ef-close-login" class="ef-modal-close" aria-label="Close login">&times;</button>
+        </div>
+        <div class="ef-modal-body login-content">
+          [@liferay_portlet["runtime"] portletName="com_liferay_login_web_portlet_LoginPortlet" /]
+        </div>
+      </div>
+    </div>
+  [/#if]
+</div>

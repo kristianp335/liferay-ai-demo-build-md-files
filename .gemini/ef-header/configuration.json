@@ -1,0 +1,59 @@
+{
+  "fieldSets": [
+    {
+      "fields": [
+        {
+          "name": "showSearch",
+          "label": "Show Search Button",
+          "description": "Display the search button in the header",
+          "type": "checkbox",
+          "defaultValue": true
+        },
+        {
+          "name": "showUserMenu",
+          "label": "Show User Menu",
+          "description": "Display user menu for logged in users",
+          "type": "checkbox",
+          "defaultValue": true
+        },
+        {
+          "name": "navigationMenuId",
+          "label": "Navigation Menu ID",
+          "description": "ID of the Liferay navigation menu to use",
+          "type": "text",
+          "defaultValue": "primary-menu"
+        },
+        {
+          "name": "sitePrefix",
+          "label": "Site Prefix",
+          "description": "URL prefix to prepend to all navigation menu links (e.g., /web/site-name)",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "name": "headerStyle",
+          "label": "Header Style",
+          "description": "Choose header background style",
+          "type": "select",
+          "defaultValue": "white",
+          "typeOptions": {
+            "validValues": [
+              {
+                "label": "White Background",
+                "value": "white"
+              },
+              {
+                "label": "Light Gray Background",
+                "value": "light"
+              },
+              {
+                "label": "Primary Color Background",
+                "value": "primary"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
