@@ -18,6 +18,9 @@ This guide provides comprehensive documentation for building B2B commerce system
 - **Image Uploads:** The original guide's two-step process of uploading to the document library and then attaching by `fileEntryId` is unreliable. A more direct and robust method is to first generate the image (e.g., using the `generate_image` tool or similar), then read that image file, Base64 encode it, and directly upload it to the product via its ERC.
     - **Correct Endpoint:** `POST /products/by-externalReferenceCode/{ERC}/images/by-base64`
 
+- **Specifications:** Attaching specifications via the nested `/productSpecifications` endpoint is prone to mapping errors (`404 NOT FOUND`). The reliable method is to update the product itself using its ERC via `PATCH /products/by-externalReferenceCode/{ERC}` and supplying a `productSpecifications` array containing the `specificationKey` and the `value`.
+    - **Note on Creation:** When creating the global specifications (via `POST /o/headless-commerce-admin-catalog/v1.0/specifications`), you should normally set `"facetable": true` in the payload so that users can use these specifications to filter searches in the storefront.
+
 ### Working API Structure (Validated Dec 2025)
 
 **Prerequisites:**
@@ -33,25 +36,54 @@ This guide provides comprehensive documentation for building B2B commerce system
 
 **Step 3 - Assign Categories:** `PATCH /products/by-externalReferenceCode/{ERC}/categories` with a payload of `[{"id": categoryId}]`.
 
-**Step 4 - Assign Options & SKUs:** `PATCH /products/by-externalReferenceCode/{ERC}` with a payload containing the `productOptions` and `skus` arrays. The `productOptions` object must reference the global `optionId` created as a prerequisite.
-```json
-{
-    "productOptions": [{
-        "optionId": 12345, // The ID of the global option
-        "productOptionValues": [
-            {"key": "value1", "name": {"en_US": "Value 1"}}
-        ]
-    }],
-    "skus": [{
-        "sku": "SKU-001",
-        "price": 99.99,
-        "purchasable": true,
-        "skuOptionValues": [{"optionValueKey": "value1"}]
-    }]
+**Step 4 - Assign Options & SKUs:** If a product requires variant SKUs (e.g., standard vs. high capacity), you MUST generate the options and map the SKUs correctly. First, clear any base SKUs. Then, `PATCH` the product via its ERC with a `productOptions` array to attach the option. Finally, `POST` the variant SKUs directly to the product's SKUs endpoint using the ERC, including the `skuOptions` block to map the specific `optionValueId`.
+
+**Example:**
+```python
+# 1. Attach Option via PATCH
+payload_opt = {
+    'productOptions': [
+        {
+            'optionId': 184112,
+            'name': {'en_US': 'Paper Tray Configuration'},
+            'fieldType': 'select',
+            'required': True
+        }
+    ]
 }
+requests.patch(f'{url}/products/by-externalReferenceCode/{ERC}', json=payload_opt)
+
+# 2. Add Option Values via POST to the new ProductOption ID
+requests.post(f'{url}/productOptions/{productOptionId}/productOptionValues', json={'key': '2-trays', 'name': {'en_US': 'Standard'}})
+
+# 3. Create Variant SKUs via POST using the optionValueId
+payload_sku = {
+    'sku': 'SKU-VARIANT-1',
+    'price': 22000,
+    'purchasable': True,
+    'published': True,
+    'skuOptions': [
+        {
+            'key': 'paper-tray-config',
+            'optionId': 184172, # The productOption instance ID
+            'optionValueId': 184173 # The newly created value ID
+        }
+    ]
+}
+requests.post(f'{url}/products/by-externalReferenceCode/{ERC}/skus', json=payload_sku)
 ```
 
-**Step 5 - Specifications (If needed):** This would likely also use the ERC endpoint: `POST /products/by-externalReferenceCode/{ERC}/productSpecifications`.
+**Step 5 - Specifications:** Do not use the nested POST endpoint. Instead, `PATCH` the product via its ERC with a `productSpecifications` array using the `specificationKey`:
+```json
+{
+    "productSpecifications": [
+        {
+            "specificationKey": "print-speed",
+            "value": {"en_US": "115 ppm"}
+        }
+    ]
+}
+```
 
 
 ## Complete Product Portfolio Implementation
