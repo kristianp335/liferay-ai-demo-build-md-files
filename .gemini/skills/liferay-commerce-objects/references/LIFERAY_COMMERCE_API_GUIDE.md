@@ -26,6 +26,11 @@ This guide provides comprehensive documentation for building B2B commerce system
 
 You MUST always create new scripts based on the **Working API Structure** below. When creating new global specifications, ALWAYS set `"facetable": true`. 
 
+**Content Generation Mandate:** 
+When creating new products, you MUST dynamically generate high-quality copy using an LLM (e.g., `gemini-2.5-flash`) for the product descriptions. 
+- **`shortDescription`**: Must be a punchy marketing summary of around 50 words.
+- **`description`**: Must be a detailed, professional B2B product description of around 500 words, focusing on enterprise benefits, technical capabilities, and use cases, formatted in basic HTML (`<p>`, `<ul>`, `<li>`, `<strong>`).
+
 #### Gold Standard Boilerplate Script
 Use this complete, working boilerplate as your definitive starting point for any new commerce imports:
 
@@ -48,13 +53,16 @@ spec_payload = {
 
 erc = "PRODUCT-ERC-123"
 
-# 1. Create Product (Requires ERC at creation)
+# 1. Create Product (Requires ERC at creation and AI-generated descriptions)
+# NOTE: Ensure short_desc (~50 words) and full_desc (~500 words HTML) are generated via AI before this step.
 prod_payload = {
     "active": True,
     "catalogId": catalog_id,
     "externalReferenceCode": erc,
     "name": {"en_US": "Example Product"},
-    "productType": "simple"
+    "productType": "simple",
+    "shortDescription": {"en_US": "Dynamic ~50 word punchy marketing summary."},
+    "description": {"en_US": "<p>Dynamic ~500 word detailed HTML description.</p>"}
 }
 # requests.post(f"{url}/products", json=prod_payload, auth=auth)
 
