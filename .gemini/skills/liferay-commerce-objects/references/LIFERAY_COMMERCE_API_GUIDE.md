@@ -21,6 +21,79 @@ This guide provides comprehensive documentation for building B2B commerce system
 - **Specifications:** Attaching specifications via the nested `/productSpecifications` endpoint is prone to mapping errors (`404 NOT FOUND`). The reliable method is to update the product itself using its ERC via `PATCH /products/by-externalReferenceCode/{ERC}` and supplying a `productSpecifications` array containing the `specificationKey` and the `value`.
     - **Note on Creation:** When creating the global specifications (via `POST /o/headless-commerce-admin-catalog/v1.0/specifications`), you should normally set `"facetable": true` in the payload so that users can use these specifications to filter searches in the storefront.
 
+### AI Agent Directives: Scripting Standards
+**CRITICAL INSTRUCTION:** Do NOT rely on or copy legacy `.py` scripts that may already exist in the user's workspace (e.g., old `create_products.py` files). Legacy scripts often contain outdated API patterns (such as nested POSTs for specifications or missing `facetable` flags). 
+
+You MUST always create new scripts based on the **Working API Structure** below. When creating new global specifications, ALWAYS set `"facetable": true`. 
+
+#### Gold Standard Boilerplate Script
+Use this complete, working boilerplate as your definitive starting point for any new commerce imports:
+
+```python
+import os
+import requests
+from requests.auth import HTTPBasicAuth
+
+url = "https://YOUR_INSTANCE/o/headless-commerce-admin-catalog/v1.0"
+catalog_id = 12345
+auth = HTTPBasicAuth('user@email.com', 'password')
+
+# Example payload for creating a Facetable Specification
+spec_payload = {
+    "key": "example-spec",
+    "title": {"en_US": "Example Spec"},
+    "facetable": True
+}
+# requests.post(f"{url}/specifications", json=spec_payload, auth=auth)
+
+erc = "PRODUCT-ERC-123"
+
+# 1. Create Product (Requires ERC at creation)
+prod_payload = {
+    "active": True,
+    "catalogId": catalog_id,
+    "externalReferenceCode": erc,
+    "name": {"en_US": "Example Product"},
+    "productType": "simple"
+}
+# requests.post(f"{url}/products", json=prod_payload, auth=auth)
+
+# 2. Assign Categories via PATCH
+cat_patch = [{"id": 99999}]
+# requests.patch(f"{url}/products/by-externalReferenceCode/{erc}/categories", json=cat_patch, auth=auth)
+
+# 3. Create SKU via PATCH
+sku_payload = {
+    "skus": [{
+        "sku": f"SKU-{erc}",
+        "price": 100.0,
+        "purchasable": True,
+        "published": True
+    }]
+}
+# requests.patch(f"{url}/products/by-externalReferenceCode/{erc}", json=sku_payload, auth=auth)
+
+# 4. Attach Specifications via PATCH (Do NOT use nested POST /productSpecifications)
+spec_patch_payload = {
+    "productSpecifications": [
+        {
+            "specificationKey": "example-spec",
+            "value": {"en_US": "Example Value"}
+        }
+    ]
+}
+# requests.patch(f"{url}/products/by-externalReferenceCode/{erc}", json=spec_patch_payload, auth=auth)
+
+# 5. Attach Image directly via Base64 to ERC
+# img_payload = {
+#     "attachment": "BASE64_STRING",
+#     "contentType": "image/png",
+#     "priority": 0,
+#     "title": {"en_US": "Main Image"}
+# }
+# requests.post(f"{url}/products/by-externalReferenceCode/{erc}/images/by-base64", json=img_payload, auth=auth)
+```
+
 ### Working API Structure (Validated Dec 2025)
 
 **Prerequisites:**
