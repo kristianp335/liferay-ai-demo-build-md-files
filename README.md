@@ -42,6 +42,11 @@ Headless browser automation for deep DOM extraction.
 - **Use for**: Capturing JavaScript-rendered content for accurate site analysis and fragment recreation.
 - **Key References**: Playwright setup and DOM capture scripts.
 
+### 6. `liferay-server-cx`
+Expert guidance for creating server-side Liferay Client Extensions as microservices.
+- **Use for**: Object Actions, Workflow Actions, Proxy Objects, and deploying backend logic to Liferay Cloud PaaS using Node.js/Express.
+- **Key References**: `client-extension.yaml` configuration and Liferay Cloud deployment descriptors.
+
 ---
 
 ## How to Interact with Skills
@@ -52,6 +57,7 @@ You can ask Shirley (your AI assistant) to activate a skill or simply describe y
 - *"Activate the `liferay-development` skill and help me build a hero fragment."*
 - *"Use the `generate-images` skill to create a 16:9 banner for a new site."*
 - *"I need to deploy these fragments. Help me with the `liferay-admin` workflows."*
+- *"Help me create an `objectAction` microservice with the `liferay-server-cx` skill."*
 
 ---
 
