@@ -180,6 +180,28 @@ This is a common, multi-faceted error that can prevent fragment collections from
 
 ---
 
+### 6. Working with Liferay Commerce Context
+
+When developing fragments for Liferay Commerce storefronts, you often need to know the currently selected commerce account or other context information to fetch personalized data via Headless APIs.
+
+**Solution:** Use the global `Liferay.CommerceContext` object provided by Liferay in the browser.
+
+#### Getting the Current Account ID (JavaScript)
+```javascript
+// Check if the Commerce Context is available
+if (Liferay.CommerceContext && Liferay.CommerceContext.account) {
+    const accountId = Liferay.CommerceContext.account.accountId;
+    console.log("Current Commerce Account ID:", accountId);
+    
+    // Example: Fetching orders for the current account
+    // const ordersUrl = `/o/headless-commerce-delivery-order/v1.0/orders?filter=accountId eq ${accountId}`;
+} else {
+    console.warn("No Commerce Account found. Ensure you are logged in and have an active commerce session.");
+}
+```
+
+---
+
 ### Conclusion
 
 Addressing these issues collectively should provide a robust and Liferay-compliant fragment collection ZIP file. The key takeaways are: strict adherence to the `collection.json` structure, using explicit Python `zipfile` operations, and following best practices for `configuration.json` and `data-lfr-editable-type` for URL and button fields.

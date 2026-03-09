@@ -245,3 +245,76 @@ requests.post(f'{url}/products/by-externalReferenceCode/{ERC}/skus', json=payloa
 - **Priority System**: 0=Packaging, 1=Product Photo, 2=Medical Consultation
 - **Complete Coverage**: All 25 products have 3 professional images with working src URLs
 - **API Statistics**: 75 uploads + 75 attachments = 150 successful API calls total
+
+## Account Onboarding & User Roles (Headless API Quirks)
+
+When building B2B commerce experiences, you often need to manage accounts, addresses, and user roles programmatically via the `headless-admin-user` APIs.
+
+### 1. Fetching User Roles
+When fetching a user's profile via `/o/headless-admin-user/v1.0/my-user-account`, Liferay strictly scopes roles based on where they are assigned. It does **not** return a simple flat array.
+
+To check if a user has a specific role (e.g., "Ricoh Dealer"), you must flatten all possible role contexts:
+```javascript
+const userUrl = '/o/headless-admin-user/v1.0/my-user-account';
+const userData = await Liferay.Util.fetch(userUrl).then(res => res.json());
+
+const allRoles = [
+    ...(userData.roleBriefs || []), // Global
+    ...(userData.accountBriefs || []).flatMap(acc => acc.roleBriefs || []), // Account
+    ...(userData.organizationBriefs || []).flatMap(org => org.roleBriefs || []), // Organization
+    ...(userData.siteBriefs || []).flatMap(site => site.roleBriefs || []), // Site
+    ...(userData.userGroupBriefs || []).flatMap(ug => ug.roleBriefs || []) // User Group
+];
+
+const isDealer = allRoles.some(role => role.name === 'Ricoh Dealer');
+```
+
+### 2. Onboarding an Account via Headless APIs
+When onboarding a B2B account, adhere to these strict Liferay validation rules:
+
+**A. Adding a Postal Address** (`POST /o/headless-admin-user/v1.0/accounts/{accountId}/postal-addresses`)
+- **`addressCountry`**: Must match the explicit `name` in Liferay exactly (e.g., `"United Kingdom"`, not `"GB"`).
+- **`addressRegion`**: Must perfectly match Liferay's region dictionary. For the UK, this is highly specific (e.g., `"London, City of"`, not `"Greater London"`). Wrap this step in a `try/catch` block to prevent region mismatch errors (`400 BAD REQUEST`) from crashing the entire flow.
+- **`addressType`**: Must exactly match a Liferay List Type (lowercase, e.g., `"billing"`, `"shipping"`).
+
+**B. Assigning a User to an Account**
+Do NOT use the generic POST endpoint mapping ID to ID. You must use the `by-email-address` endpoint to associate an existing user to an account:
+```javascript
+// Correct
+await Liferay.Util.fetch(`/o/headless-admin-user/v1.0/accounts/${accountId}/user-accounts/by-email-address/${userEmail}`, { method: 'POST' });
+```
+
+**C. Assigning Account Roles**
+Assign roles (like Account Administrator) by their External Reference Code (ERC):
+```javascript
+await Liferay.Util.fetch(`/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/by-external-reference-code/ACCOUNT_ADMINISTRATOR/user-accounts/${userId}`, {
+    method: 'POST'
+});
+```
+
+## Order Management and Relationships
+
+In advanced B2B scenarios, commerce orders are often linked to custom business processes (e.g., financing, compliance, or service schedules) managed via Liferay Objects.
+
+### 1. Fetching Orders for Personalization
+The `headless-commerce-admin-order` API provides access to administrative order data, which is useful for building dashboards.
+
+- **Endpoint:** `/o/headless-commerce-admin-order/v1.0/orders`
+- **Key Parameter:** `nestedFields=orderItems` (to include line items in the response).
+
+### 2. Linking Orders to Custom Objects
+When creating a Liferay Object that relates to a Commerce Order, use a relationship field. In the Headless API, this relationship is exposed with a specific naming convention: `r_<sourceObject>To<targetObject>_<targetObjectIdField>`.
+
+**Example Pattern (Ricoh Finance):**
+- **Object**: `FinanceOrigination`
+- **Relationship Field (API Name)**: `r_commerceOrderToFinance_commerceOrderId`
+
+### 3. Data Correlation Workflow
+1. Fetch orders filtered by the current account (often performed client-side using `Liferay.CommerceContext.accountId`).
+2. Fetch the related custom objects.
+3. Correlate the data in your fragment logic by matching the `order.id` with the relationship field in the custom object.
+
+```javascript
+const orderId = order.id; // e.g., 12345
+const matchingFinance = financeItems.find(f => f.r_commerceOrderToFinance_commerceOrderId == orderId);
+```

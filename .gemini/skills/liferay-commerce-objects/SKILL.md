@@ -17,5 +17,5 @@ This skill provides the procedural knowledge needed to interact with Liferay's h
 
 Load these reference files into context as needed:
 
-- **[LIFERAY_COMMERCE_API_GUIDE.md](references/LIFERAY_COMMERCE_API_GUIDE.md)**: Validated workflows for product creation and catalog management.
+- **[LIFERAY_COMMERCE_API_GUIDE.md](references/LIFERAY_COMMERCE_API_GUIDE.md)**: Validated workflows for product creation, catalog management, account onboarding, and headless user roles.
 - **[OBJECT_DEFINITION_CREATION_AND_POPULATION.md](references/OBJECT_DEFINITION_CREATION_AND_POPULATION.md)**: Guide for automating custom data structures in Liferay.
