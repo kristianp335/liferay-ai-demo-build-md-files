@@ -3,5 +3,23 @@
     "fileName": [
       "WHO_YOU_ARE.md"
     ]
+  },
+
+  "experimental": { 
+    "enableAgents": true 
+  },
+  
+  "agents": {
+    "overrides": {
+      "browser_agent": {
+        "enabled": true
+      }
+    },
+    "browser": {
+      "sessionMode": "persistent",
+      "visualModel": "gemini-2.5-computer-use-preview-10-2025"
+    }
   }
+  
+
 }
