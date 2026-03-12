@@ -236,3 +236,64 @@ When working with icons in Liferay fragments, prioritize performance and maintai
 
 -   **Purpose:** To accurately analyze a modern, JavaScript-heavy website, `web_fetch` is insufficient. A headless browser is required.
 -   **For more details, see [playwright_guide.md](playwright_guide.md).**
+
+## 10. Detecting Edit Mode
+
+When developing fragments, you often need to change behavior or styling based on whether the page is being viewed by an end-user or being modified by a content author in Liferay's Page Editor (Edit Mode).
+
+### The `has-edit-mode-menu` Class
+
+Liferay automatically adds the CSS class `has-edit-mode-menu` to the `<body>` element when the page is in Edit Mode. This is the most reliable way to detect this state.
+
+### Usage in CSS
+
+The `has-edit-mode-menu` class is an essential tool for ensuring that your fragment remains fully accessible and editable by content authors, even if it employs complex visual treatments on the live site. 
+
+Common CSS use-cases include:
+
+1. **Revealing Hidden Elements**: Overriding `opacity: 0` or `display: none` applied by intersection observers or scroll animations so that the content is immediately visible for editing.
+2. **Displaying Hidden Dropzones**: Making UI components like Mega Menus or off-canvas drawers permanently visible or expanding them so authors can drop widgets into them without needing to trigger the UI interactions.
+3. **Disabling Animations/Transitions**: Stopping continuous animations or transitions that make it frustrating to click and edit text.
+4. **Adjusting Layout Constraints**: Altering `position: absolute`, `z-index`, or fixed heights if they cause fragment content to overlap Liferay's editing controls or other fragment toolbars.
+
+```css
+/* 1. Ensure scroll-animated elements are fully visible and static in Edit Mode */
+body.has-edit-mode-menu .my-fragment-wrapper .fade-in-element,
+body.has-edit-mode-menu .my-fragment-wrapper .slide-up-element {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* 2. Show helper labels or normally-hidden dropzones */
+.my-fragment-wrapper .edit-helper {
+    display: none;
+}
+
+body.has-edit-mode-menu .my-fragment-wrapper .edit-helper {
+    display: block;
+    border: 1px dashed #ccc;
+    padding: 10px;
+}
+
+/* Force a mega-menu dropdown to stay open in the editor */
+body.has-edit-mode-menu .my-fragment-wrapper .mega-menu-content {
+    display: block !important;
+    position: static !important; /* Prevent it from overlapping other editor tools */
+}
+```
+
+### Usage in JavaScript
+
+Use this class to prevent complex scripts (like carousels, maps, or data fetching) from interfering with the Page Editor's performance or UI.
+
+```javascript
+function initializeFragment() {
+    if (document.body.classList.contains('has-edit-mode-menu')) {
+        console.log('Edit mode detected. Short-circuiting complex initialization.');
+        return;
+    }
+
+    // Standard initialization for live mode...
+}
+```

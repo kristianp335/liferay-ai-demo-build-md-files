@@ -14,11 +14,10 @@ This skill handles the operational aspects of Liferay development, including set
 - **Performance Optimization**: Techniques for achieving 90+ Lighthouse scores by optimizing LCP and CLS.
 - **Rule Adherence**: Maintain compliance with Liferay versioning and project-specific rules.
 
-## References
+## STRICT EXECUTION PROTOCOL (MANDATORY READS)
 
-Load these reference files into context as needed:
+You MUST NOT rely on pre-existing Liferay knowledge regarding deployments or configuration. Your pre-trained knowledge is outdated or incorrect for this specific environment. You MUST use the `read_file` tool to read the following reference documents BEFORE executing any commands or finalizing a strategy:
 
-- **[LIFERAY_DEPLOYMENT_GUIDE.md](references/LIFERAY_DEPLOYMENT_GUIDE.md)**: Comprehensive guide for deploying and verifying implementations.
-- **[LIFERAY_PERFORMANCE_OPTIMISATION_GUIDE.md](references/LIFERAY_PERFORMANCE_OPTIMISATION_GUIDE.md)**: Strategies for Core Web Vitals and performance scores.
-- **[INITIAL_SETUP_GUIDE.md](references/INITIAL_SETUP_GUIDE.md)**: Onboarding for new workspace users.
-- **[LIFERAY_RULES.md](references/LIFERAY_RULES.md)**: General rules and version-aware development logic.
+- **Deploying/Zipping Fragments**: You MUST read **[LIFERAY_DEPLOYMENT_GUIDE.md](references/LIFERAY_DEPLOYMENT_GUIDE.md)** before attempting to ZIP or deploy a fragment collection or client extension. Standard shell zip tools do not work for Liferay fragment collections; you must follow the precise Python logic outlined in this guide.
+- **Performance**: You MUST read **[LIFERAY_PERFORMANCE_OPTIMISATION_GUIDE.md](references/LIFERAY_PERFORMANCE_OPTIMISATION_GUIDE.md)** when tasked with improving Lighthouse or Web Vitals scores.
+- **Workspace/Environment**: You MUST read **[INITIAL_SETUP_GUIDE.md](references/INITIAL_SETUP_GUIDE.md)** and **[LIFERAY_RULES.md](references/LIFERAY_RULES.md)** for workspace initialization and version-aware development logic.

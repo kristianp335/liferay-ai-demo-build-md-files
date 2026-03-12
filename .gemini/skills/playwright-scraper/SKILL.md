@@ -13,8 +13,8 @@ This skill provides the procedural knowledge for using Playwright to extract ful
 - **Rendered HTML Capture**: Navigating to URLs and waiting for `domcontentloaded` to capture the final state of a page.
 - **Fragment Analysis Preparation**: Saving full DOM extractions to enable accurate analysis for fragment creation.
 
-## References
+## STRICT EXECUTION PROTOCOL (MANDATORY READS)
 
-Load this reference file for installation and usage scripts:
+You MUST NOT attempt to write Playwright scripts from memory. You MUST use the `read_file` tool to read the following reference document BEFORE generating any Python scraping scripts:
 
-- **[PLAYWRIGHT_GUIDE_DOM_EXTRACTION.md](references/PLAYWRIGHT_GUIDE_DOM_EXTRACTION.md)**: Detailed instructions for setting up Playwright and the `get_dom.py` script.
+- **Playwright Setup & Scripts**: You MUST read **[PLAYWRIGHT_GUIDE_DOM_EXTRACTION.md](references/PLAYWRIGHT_GUIDE_DOM_EXTRACTION.md)** to obtain the validated installation commands and the correct `get_dom.py` implementation logic.

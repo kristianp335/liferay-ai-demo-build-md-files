@@ -13,9 +13,9 @@ This skill provides the procedural knowledge needed to interact with Liferay's h
 - **Commerce Operations**: Managing B2B catalogs, SKUs, categories, and image attachments via Headless API.
 - **API Reliability**: Using `externalReferenceCode` (ERC) as the primary identifier for robust integration.
 
-## References
+## STRICT EXECUTION PROTOCOL (MANDATORY READS)
 
-Load these reference files into context as needed:
+You MUST NOT guess API endpoints or JSON payload structures. You MUST use the `read_file` tool to read the following reference documents BEFORE executing Python scripts or making API calls:
 
-- **[LIFERAY_COMMERCE_API_GUIDE.md](references/LIFERAY_COMMERCE_API_GUIDE.md)**: Validated workflows for product creation, catalog management, account onboarding, and headless user roles.
-- **[OBJECT_DEFINITION_CREATION_AND_POPULATION.md](references/OBJECT_DEFINITION_CREATION_AND_POPULATION.md)**: Guide for automating custom data structures in Liferay.
+- **Commerce / Catalogs / Products**: You MUST read **[LIFERAY_COMMERCE_API_GUIDE.md](references/LIFERAY_COMMERCE_API_GUIDE.md)** before attempting to create products, update catalogs, or manage user roles and accounts.
+- **Custom Objects**: You MUST read **[OBJECT_DEFINITION_CREATION_AND_POPULATION.md](references/OBJECT_DEFINITION_CREATION_AND_POPULATION.md)** before attempting to programmatically create or populate custom Liferay Objects.

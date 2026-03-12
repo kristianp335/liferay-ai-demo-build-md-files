@@ -15,8 +15,8 @@ This skill optimizes the workflow for using the `imagen-4.0-generate-001` model 
 - **Format Optimization**: Convert large PNG assets to compressed JPEGs or WebP for better web performance.
 - **Icon & Pattern Generation**: Specialized instructions for UI elements and tiling backgrounds.
 
-## References
+## STRICT EXECUTION PROTOCOL (MANDATORY READS)
 
-Load this reference file for specific processing scripts:
+You MUST NOT attempt to write API calls to the Imagen 4 model from memory. You MUST use the `read_file` tool to read the following reference document BEFORE generating images:
 
-- **[IMAGEN_4_GUIDE.md](references/IMAGEN_4_GUIDE.md)**: Contains API usage instructions, parameters, and Pillow-based Python scripts for cropping and resizing.
+- **Imagen API Usage**: You MUST read **[IMAGEN_4_GUIDE.md](references/IMAGEN_4_GUIDE.md)** to obtain the correct Python script templates, endpoint URLs, and valid parameter configurations (e.g., `aspectRatio`, `sampleImageSize`).

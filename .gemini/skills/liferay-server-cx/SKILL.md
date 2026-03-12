@@ -23,8 +23,8 @@ For building demo microservices, **Node.js (with Express)** is the preferred and
 
 *Note: Only use Spring Boot if the demo specifically requires an enterprise Java narrative or integration with heavy Java-based legacy systems.*
 
-## References
+## STRICT EXECUTION PROTOCOL (MANDATORY READS)
 
-Load these reference files into context as needed:
+You MUST NOT rely on pre-existing knowledge of Liferay server-side extensibility or LCP deployment structures. You MUST use the `read_file` tool to read the following reference document BEFORE planning or writing code:
 
-- **[LIFERAY_SERVER_CX_GUIDE.md](references/LIFERAY_SERVER_CX_GUIDE.md)**: Comprehensive guide on how to configure `client-extension.yaml`, build the backend microservice, and write the Liferay Cloud PaaS deployment descriptors.
+- **Server-Side Configuration & Microservices**: You MUST read **[LIFERAY_SERVER_CX_GUIDE.md](references/LIFERAY_SERVER_CX_GUIDE.md)**. This guide contains the exact `client-extension.yaml` structures required for Server-Side extensions and the correct payload parsing methods for the accompanying microservices.
