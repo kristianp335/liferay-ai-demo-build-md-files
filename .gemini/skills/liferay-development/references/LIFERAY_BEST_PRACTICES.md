@@ -226,7 +226,42 @@ When working with icons in Liferay fragments, prioritize performance and maintai
     -   `create_client_extension_zip.py`: Used to package client extensions.
 -   **Do Not Use Standard OS Tools:** Standard OS zipping tools can create archives that Liferay will silently fail to import.
 
-## 8. Image Generation with `generate-images`
+## 8. Liferay Deployment Procedures
+
+### IMPORTANT: Separate Deployments
+
+It is critical to understand that **Client Extensions** and **Fragment Collections** are deployed separately and using different methods.
+
+*   **Fragment Collections** are imported as `.zip` files through the "Page Fragments" interface.
+*   **Client Extensions** are deployed as folders (unzipped), typically through Liferay's developer tooling or by placing the folder in the `deploy/` directory.
+
+**NEVER** zip a client extension and a fragment collection together.
+
+### Deployment Steps (UI-Based)
+
+#### Step 1: Deploy Client Extensions
+1. Navigate to **Applications** > **Client Extensions** in the Liferay admin interface.
+2. Upload or deploy the client extension folder.
+3. Verify both CSS and JavaScript extensions are active.
+
+#### Step 2: Deploy Fragment Collection
+1. Navigate to **Site Builder** > **Page Fragments**.
+2. Click **Import** or **Add Collection**.
+3. Upload the collection `.zip` file created by the Python script.
+4. Verify all fragments and resources are imported successfully.
+
+## 9. Demo Page Assembly
+
+When building the final demo, follow this recommended page structure to ensure a cohesive user experience:
+
+1.  **Header**: Navigation and branding.
+2.  **Hero Section**: High-impact visuals and core value proposition.
+3.  **Key Features/Capabilities**: Grid or carousel highlighting main offerings.
+4.  **Value Propositions/Benefits**: Clear statements of impact for the customer.
+5.  **Interactive Showcases**: Product demos or solution highlights.
+6.  **Footer**: Global navigation, social links, and legal information.
+
+## 10. Image Generation with `generate-images`
 
 -   **API Limitations:** The default image tools may not be sufficient. Use the `generate-images` skill and the Imagen 4 Python API for better control.
 -   **Capabilities:** The Imagen 4 API supports different resolutions (1K, 2K) and native aspect ratios (1:1, 16:9, etc.).

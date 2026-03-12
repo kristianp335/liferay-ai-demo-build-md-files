@@ -202,6 +202,36 @@ if (Liferay.CommerceContext && Liferay.CommerceContext.account) {
 
 ---
 
+### 7. Debug Steps for Failed Deployments
+
+If your deployment fails, use these specific checks to identify the root cause.
+
+#### Fragment Import Issues
+1.  **Check Fragment Library**: Verify all fragments appear with thumbnails in the Site Builder.
+2.  **Inspect Configuration**: Test each fragment's configuration panel in the Page Editor to ensure all fields are available and functioning.
+3.  **Verify Asset Links**: If resources (images/SVGs) are missing, ensure you used the `[resources:filename.ext]` syntax and that the files are in the `resources/` folder of the ZIP.
+
+#### Client Extension Issues
+1.  **Check Direct URLs**: Verify if the CSS/JS files are accessible via their direct URLs (e.g., `[domain]/o/[extension-id]/css/global.css`).
+2.  **Inspect Page Source**: Confirm that the client extension resources are actually being injected into the page's `<head>`.
+3.  **Verify Extension Status**: Check the "Client Extensions" dashboard in Liferay Admin to confirm the extensions are deployed and active.
+
+---
+
+### 8. Performance and Security Considerations
+
+#### Fragment Performance
+- **Inline Critical Resources**: For above-the-fold elements (like hero banners), inline critical CSS and SVGs directly into the fragment's HTML to eliminate network requests.
+- **Image Priority**: Use `fetchpriority="high"` and `loading="eager"` for LCP-critical images.
+- **Avoid Content Jumps**: Always set explicit `width` and `height` (or `aspect-ratio`) for images and reserve space for dynamic content to keep CLS under 0.1.
+
+#### Security Best Practices
+- **Permissioning**: Configure appropriate access control for your fragment collections and ensure only the necessary roles have edit permissions.
+- **CSRF Protection**: When making API calls (e.g., to Headless APIs) from fragment JavaScript, ensure you use the standard Liferay methods that handle CSRF tokens automatically.
+- **Update Frequency**: Regularly review fragments to ensure all external links and embedded resources are current and secure.
+
+---
+
 ### Conclusion
 
 Addressing these issues collectively should provide a robust and Liferay-compliant fragment collection ZIP file. The key takeaways are: strict adherence to the `collection.json` structure, using explicit Python `zipfile` operations, and following best practices for `configuration.json` and `data-lfr-editable-type` for URL and button fields.
