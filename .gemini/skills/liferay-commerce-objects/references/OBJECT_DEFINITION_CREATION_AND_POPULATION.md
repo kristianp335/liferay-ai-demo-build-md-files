@@ -30,9 +30,9 @@ import uuid
 
 # --- Configuration ---
 # User-provided Liferay instance details
-LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
-LIFERAY_USERNAME = "nick@boots.com"
-LIFERAY_PASSWORD = "Gloria1234!"
+LIFERAY_HOST = "https://YOUR_LIFERAY_HOST"
+LIFERAY_USERNAME = "YOUR_LIFERAY_USERNAME"
+LIFERAY_PASSWORD = "YOUR_LIFERAY_PASSWORD"
 COMPANY_ID = os.getenv("COMPANY_ID", "20123") # Default Liferay company ID
 
 # --- Object Definition Payload ---
@@ -229,9 +229,9 @@ import json
 import os
 
 # --- Configuration ---
-LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
-LIFERAY_USERNAME = "nick@boots.com"
-LIFERAY_PASSWORD = "Gloria1234!"
+LIFERAY_HOST = "https://YOUR_LIFERAY_HOST"
+LIFERAY_USERNAME = "YOUR_LIFERAY_USERNAME"
+LIFERAY_PASSWORD = "YOUR_LIFERAY_PASSWORD"
 
 # Object ID of the Email object created previously
 OBJECT_DEFINITION_ID = 156560 # From previous output
@@ -300,9 +300,9 @@ import json
 import os
 
 # --- Configuration ---
-LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
-LIFERAY_USERNAME = "nick@boots.com"
-LIFERAY_PASSWORD = "Gloria1234!"
+LIFERAY_HOST = "https://YOUR_LIFERAY_HOST"
+LIFERAY_USERNAME = "YOUR_LIFERAY_USERNAME"
+LIFERAY_PASSWORD = "YOUR_LIFERAY_PASSWORD"
 
 # Object ID of the Email object
 OBJECT_DEFINITION_ID = 156560
@@ -394,9 +394,9 @@ from datetime import datetime, timedelta
 import uuid
 
 # --- Configuration ---
-LIFERAY_HOST = "https://webserver-lctbootsopticians-prd.lfr.cloud"
-LIFERAY_USERNAME = "nick@boots.com"
-LIFERAY_PASSWORD = "Gloria1234!"
+LIFERAY_HOST = "https://YOUR_LIFERAY_HOST"
+LIFERAY_USERNAME = "YOUR_LIFERAY_USERNAME"
+LIFERAY_PASSWORD = "YOUR_LIFERAY_PASSWORD"
 
 # Get the Object ID from the successfully created object
 # You can also get this from the .gemini/Object_Definition_Email_156560.json file

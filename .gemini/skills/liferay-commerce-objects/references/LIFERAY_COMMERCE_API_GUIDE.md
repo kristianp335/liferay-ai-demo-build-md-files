@@ -41,7 +41,7 @@ from requests.auth import HTTPBasicAuth
 
 url = "https://YOUR_INSTANCE/o/headless-commerce-admin-catalog/v1.0"
 catalog_id = 12345
-auth = HTTPBasicAuth('user@email.com', 'password')
+auth = HTTPBasicAuth('YOUR_EMAIL', 'YOUR_PASSWORD')
 
 # Example payload for creating a Facetable Specification
 spec_payload = {
