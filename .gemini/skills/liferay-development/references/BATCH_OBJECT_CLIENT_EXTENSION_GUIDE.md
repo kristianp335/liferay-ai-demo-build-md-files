@@ -91,7 +91,22 @@ Key requirements:
 - **`values`**: A dictionary containing the actual field names and their values.
 
 #### Advanced Mapping Patterns
-- **Relationships**: Use the format `r_[relName]To[Target]_[targetIdField]`. For batch, the value must be the **integer ID** of the related record (e.g., `38660`).
+- **Relationships (ERC Resolution)**: This is the **preferred method** for portable deployments. You do not need the internal ID. Use the relationship's camelCase name as the key, and an object containing the target `externalReferenceCode`.
+  - **Single Relationship**:
+    ```json
+    "relationshipName": { "externalReferenceCode": "PARENT-ERC-001" }
+    ```
+  - **Many-to-Many Relationship**:
+    ```json
+    "relationshipName": [
+      { "externalReferenceCode": "REL-ERC-01" },
+      { "externalReferenceCode": "REL-ERC-02" }
+    ]
+    ```
+- **Relationship Field (Direct Mapping)**: If mapping to a specific field (e.g., on an Account or System Object), use the `r_[relName]To[Target]_[targetIdField]` syntax.
+  - **Using ID**: `38660` (value is a direct integer).
+  - **Using ERC**: Not supported via the `r_...` field syntax; use the **Relationship Name** syntax above instead.
+
 - **Dates**: Must use **ISO 8601** format with UTC 'Z' (e.g., `"2024-03-27T10:00:00Z"`).
 - **Categorization**: Use `assetCategoryIds` (array of integers) or `assetTagNames` (array of strings) at the root of the item object (outside the `values` block) if `enableCategorization` is active.
 
