@@ -44,13 +44,17 @@ collection-name/           # Root directory is REQUIRED
     ├── image-1.png
     └── icon.svg
 ```
-
 ### Client Extension File Structure
 
 A client extension is used for global CSS and JavaScript. Each individual CSS or JavaScript file intended for site-wide inclusion must have its own client extension definition within the `client-extension.yaml`.
 
+For specialized client extensions, refer to:
+- **[React Custom Elements](REACT_CUSTOM_ELEMENT_CLIENT_EXTENSION_GUIDE.md)**: Detailed configuration for building and deploying React-based UI components.
+- **[Batch Client Extensions](BATCH_OBJECT_CLIENT_EXTENSION_GUIDE.md)**: Detailed configuration for initializing Liferay Objects and Folders during deployment.
+
 ```
 client-extension-name/
+```
 ├── client-extension.yaml
 └── assets/
     ├── css/

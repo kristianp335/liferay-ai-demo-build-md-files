@@ -23,6 +23,8 @@ You MUST NOT rely on pre-existing Liferay knowledge. Your pre-trained knowledge 
 - **Fragment Configuration (`configuration.json`)**: You MUST read **[FRAGMENT_LFR_CONFIGURATION_TYPES.md](references/FRAGMENT_LFR_CONFIGURATION_TYPES.md)** to ensure correct JSON syntax and avoid using deprecated field types.
 - **Fragment Editability (HTML `data-lfr-editable-type`)**: You MUST read **[FRAGMENT_LFR_EDITABLE_TYPES.md](references/FRAGMENT_LFR_EDITABLE_TYPES.md)** before applying editable tags to HTML elements (e.g., `<a>`, `<img>`, `<h1>`). Do not guess these types.
 - **Client Extensions**: You MUST read **[GUIDED_CLIENT_EXTENSION.md](references/GUIDED_CLIENT_EXTENSION.md)** before creating client extension configuration files. You MUST use `client-extension.yaml` files, NEVER `.json`.
+- **React Client Extensions**: For React-based Custom Elements, you MUST read **[REACT_CUSTOM_ELEMENT_CLIENT_EXTENSION_GUIDE.md](references/REACT_CUSTOM_ELEMENT_CLIENT_EXTENSION_GUIDE.md)**.
+- **Batch Client Extensions**: For Object/Folder initialization, you MUST read **[BATCH_OBJECT_CLIENT_EXTENSION_GUIDE.md](references/BATCH_OBJECT_CLIENT_EXTENSION_GUIDE.md)**.
 - **Styling**: You MUST read **[LIFERAY_CORE_STYLEBOOK_CLASSIC_CSS_TOKENS.md](references/LIFERAY_CORE_STYLEBOOK_CLASSIC_CSS_TOKENS.md)** before applying CSS colors or variables.
 - **Headless APIs**: You MUST read **[LIFERAY_HEADLESS_API_GUIDE.md](references/LIFERAY_HEADLESS_API_GUIDE.md)** before writing any API interaction logic.
 
