@@ -169,11 +169,13 @@ To ensure consistency and allow for site-wide branding changes, custom styles sh
 
 ### Fragment CSS Scoping
 
-To prevent styles from one fragment affecting others, you **must manually add a wrapper `div`** with a unique class to the root of your fragment's `index.html`. All CSS rules in `index.css` should then be prefixed with this wrapper class.
+To prevent styles from one fragment affecting others and to ensure high specificity that avoids theme overrides, you **must manually add a wrapper `div`** with a unique class to the root of your fragment's `index.html`. 
+
+All CSS rules in `index.css` **must** then be prefixed with both the `#wrapper` ID (which Liferay provides globally) and your unique wrapper class.
 
 -   **Example:**
     -   In `index.html`: `<div class="my-fragment-wrapper">...</div>`
-    -   In `index.css`: `.my-fragment-wrapper .my-title { color: blue; }`
+    -   In `index.css`: `#wrapper .my-fragment-wrapper .my-title { color: blue; }`
 
 ## 6. Asset Management
 
