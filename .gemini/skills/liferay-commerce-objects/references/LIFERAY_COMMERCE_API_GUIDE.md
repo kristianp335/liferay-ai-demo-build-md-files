@@ -41,7 +41,7 @@ from requests.auth import HTTPBasicAuth
 
 url = "https://YOUR_INSTANCE/o/headless-commerce-admin-catalog/v1.0"
 catalog_id = 12345
-auth = HTTPBasicAuth('YOUR_EMAIL', 'YOUR_PASSWORD')
+auth = HTTPBasicAuth('user@email.com', 'password')
 
 # Example payload for creating a Facetable Specification
 spec_payload = {
@@ -92,12 +92,14 @@ spec_patch_payload = {
 }
 # requests.patch(f"{url}/products/by-externalReferenceCode/{erc}", json=spec_patch_payload, auth=auth)
 
-# 5. Attach Image directly via Base64 to ERC
+# 5. Attach Optimized Image directly via Base64 to ERC
+# IMPORTANT: Use Pillow to shrink the image first, and ALWAYS pass neverExpire: True
 # img_payload = {
-#     "attachment": "BASE64_STRING",
-#     "contentType": "image/png",
+#     "attachment": "BASE64_STRING_OF_RESIZED_IMAGE",
+#     "contentType": "image/jpeg",
 #     "priority": 0,
-#     "title": {"en_US": "Main Image"}
+#     "title": {"en_US": "Main Image"},
+#     "neverExpire": True
 # }
 # requests.post(f"{url}/products/by-externalReferenceCode/{erc}/images/by-base64", json=img_payload, auth=auth)
 ```
@@ -111,9 +113,18 @@ spec_patch_payload = {
 **Product-Specific Workflow:**
 **Step 1 - Create Product:** `POST /products` with basic fields (`name`, `description`, `catalogId`, etc.). **Crucially, you must include a unique `externalReferenceCode` in this initial post.**
 
-**Step 2 - Generate & Upload Image:**
+**Step 2 - Generate, Optimize & Upload Image:**
     - **Generate Image:** Use the `generate_image` tool (or equivalent) with a descriptive prompt to create the desired image file.
-    - **Upload Image:** Read the generated image file, Base64 encode its content, and then `POST` to `/products/by-externalReferenceCode/{ERC}/images/by-base64` with a payload containing the Base64-encoded image string and content type.
+    - **Optimize Image:** ALWAYS use Python's Pillow library to resize or reduce the size of generated images before uploading to preserve bandwidth.
+    - **Upload Image:** Read the optimized image file, Base64 encode its content, and `POST` to `/products/by-externalReferenceCode/{ERC}/images/by-base64`. 
+    - **Crucial Payload Setting:** The payload must include `"neverExpire": True` to ensure the image does not disappear from the product over time.
+
+**Managing Existing Images (Deleting & Recreating):**
+When fixing expiring images or replacing them on an existing product, follow this exact sequence:
+1. Fetch existing images using `GET /products/{productId}/images` (Note: use internal `productId`, NOT `id` or `ERC` for fetching).
+2. Iterate through the images and delete them via `DELETE /attachment/{imageId}`.
+3. Add a small `time.sleep(0.5)` to ensure the delete transaction commits.
+4. Re-upload the optimized image using `POST /products/by-externalReferenceCode/{ERC}/images/by-base64` (or `by-url`), ensuring you pass `"neverExpire": True` in the payload.
 
 **Step 3 - Assign Categories:** `PATCH /products/by-externalReferenceCode/{ERC}/categories` with a payload of `[{"id": categoryId}]`.
 
