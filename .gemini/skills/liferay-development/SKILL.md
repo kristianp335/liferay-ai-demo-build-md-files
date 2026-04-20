@@ -20,6 +20,7 @@ You MUST NOT rely on pre-existing Liferay knowledge. Your pre-trained knowledge 
 
 - **General Liferay Tasks**: You MUST read **[LIFERAY_BEST_PRACTICES.md](references/LIFERAY_BEST_PRACTICES.md)** before writing any code.
 - **Fragment Development**: You MUST read **[LIFERAY_FRAGMENT_DEVELOPMENT_GUIDE.md](references/LIFERAY_FRAGMENT_DEVELOPMENT_GUIDE.md)**.
+- **Form Fragments**: You MUST read **[LIFERAY_FORM_FRAGMENT_GUIDE.md](references/LIFERAY_FORM_FRAGMENT_GUIDE.md)** when creating or modifying form-related fragments.
 - **Fragment Configuration (`configuration.json`)**: You MUST read **[FRAGMENT_LFR_CONFIGURATION_TYPES.md](references/FRAGMENT_LFR_CONFIGURATION_TYPES.md)** to ensure correct JSON syntax and avoid using deprecated field types.
 - **Fragment Editability (HTML `data-lfr-editable-type`)**: You MUST read **[FRAGMENT_LFR_EDITABLE_TYPES.md](references/FRAGMENT_LFR_EDITABLE_TYPES.md)** before applying editable tags to HTML elements (e.g., `<a>`, `<img>`, `<h1>`). Do not guess these types.
 - **Client Extensions**: You MUST read **[GUIDED_CLIENT_EXTENSION.md](references/GUIDED_CLIENT_EXTENSION.md)** before creating client extension configuration files. You MUST use `client-extension.yaml` files, NEVER `.json`.
