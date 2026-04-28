@@ -28,6 +28,7 @@ You MUST NOT rely on pre-existing Liferay knowledge. Your pre-trained knowledge 
 - **Batch Client Extensions**: For Object/Folder initialization, you MUST read **[BATCH_OBJECT_CLIENT_EXTENSION_GUIDE.md](references/BATCH_OBJECT_CLIENT_EXTENSION_GUIDE.md)**.
 - **Styling**: You MUST read **[LIFERAY_CORE_STYLEBOOK_CLASSIC_CSS_TOKENS.md](references/LIFERAY_CORE_STYLEBOOK_CLASSIC_CSS_TOKENS.md)** before applying CSS colors or variables.
 - **Headless APIs**: You MUST read **[LIFERAY_HEADLESS_API_GUIDE.md](references/LIFERAY_HEADLESS_API_GUIDE.md)** before writing any API interaction logic.
+- **OAuth2 in Fragments**: You MUST read **[OAUTH2_CLIENT_FRAGMENT_GUIDE.md](references/OAUTH2_CLIENT_FRAGMENT_GUIDE.md)** before writing API requests using `@liferay/oauth2-provider-web/client`.
 
 ### Component-Specific Documentation
 If requested to modify these specific components, you MUST read their respective documentation:
