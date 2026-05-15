@@ -125,3 +125,77 @@ const financeItems = financeData.items || [];
 // Inside your order loop:
 const matchingFinance = financeItems.find(f => f.r_commerceOrderToFinance_commerceOrderId == order.id);
 ```
+
+## 5. Unauthenticated Guest Access & Service Access Policies (SAP)
+
+By default, Liferay Headless APIs block unauthenticated (Guest) requests. If you are building fragments or front-end components meant for public pages, you MUST configure a **Service Access Policy (SAP)**.
+
+### Configuring the SAP
+1. Navigate to **Global Menu &rarr; Control Panel &rarr; Security &rarr; Service Access Policy**.
+2. Click **Add** to create a new policy.
+3. Configure the following critical settings:
+   - **Enabled:** Checked
+   - **Default:** Checked *(This is required to apply the policy to unauthenticated/guest users automatically).*
+   - **Title:** e.g., "Guest Headless Delivery Access"
+4. Switch to **Advanced Mode** at the bottom of the page.
+5. In the **Allowed Service Signatures** box, add the fully qualified implementation signatures required for your use case.
+
+**Common Signatures for Public Sites:**
+
+To allow guests to fetch individual Web Content Articles (Structured Content):
+```text
+com.liferay.headless.delivery.internal.resource.v1_0.StructuredContentResourceImpl#getStructuredContent
+```
+
+To allow guests to fetch Navigation Menus via the Headless API:
+```text
+com.liferay.headless.delivery.internal.resource.v1_0.NavigationMenuResourceImpl#getNavigationMenu
+```
+
+*Note: You must also ensure the actual resource (e.g., the Web Content Article) has its View permissions granted to the Guest role.*
+
+## 6. Dynamic Fragment Integration via Headless API
+
+When building custom UI fragments that rely on complex data (like Geolocation fields which cannot be mapped natively via `data-lfr-editable-type="html"`), you can use the Headless API to dynamically fetch and inject the data client-side.
+
+### Example: Google Maps Integration via URL Path Parsing
+
+If a fragment sits on a Display Page Template, it lacks direct FreeMarker access to the underlying structured content's ID in the browser. You can parse the URL to extract the Content ID and make an API call to retrieve the necessary fields (like latitude and longitude).
+
+```javascript
+(function() {
+    const iframe = fragmentElement.querySelector('.dynamic-map');
+
+    // 1. Abort if inside Liferay Site Builder edit mode to prevent breaking the editor
+    if (document.body.classList.contains('has-edit-mode-menu') || document.querySelector('[data-editor-enabled="true"]')) {
+        return;
+    }
+
+    // 2. Extract the Structured Content ID from the last segment of the Display Page URL
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    const contentId = pathSegments[pathSegments.length - 1];
+
+    if (contentId && !isNaN(contentId)) {
+        // 3. Securely fetch the article details using Liferay's built-in utility (handles CSRF/Auth automatically)
+        Liferay.Util.fetch(`/o/headless-delivery/v1.0/structured-contents/${contentId}`)
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                // 4. Extract the nested geolocation field
+                if (data.contentFields) {
+                    const geoField = data.contentFields.find(f => f.name === 'geolocationOfPrimaryHomeCourse');
+                    if (geoField && geoField.contentFieldValue && geoField.contentFieldValue.geo) {
+                        const lat = geoField.contentFieldValue.geo.latitude;
+                        const lng = geoField.contentFieldValue.geo.longitude;
+                        
+                        // 5. Update the iframe source
+                        iframe.src = `https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${lat},${lng}&zoom=14`;
+                    }
+                }
+            })
+            .catch(err => console.error("Failed to fetch data:", err));
+    }
+})();
+```
