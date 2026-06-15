@@ -4,11 +4,9 @@
       "WHO_YOU_ARE.md"
     ]
   },
-
   "experimental": { 
     "enableAgents": true 
   },
-  
   "agents": {
     "overrides": {
       "browser_agent": {
@@ -17,9 +15,16 @@
     },
     "browser": {
       "sessionMode": "persistent",
-      "visualModel": "gemini-2.5-computer-use-preview-10-2025"
+      "visualModel": "gemini-2.5-computer-use-preview-10-2025",
+      "allowedDomains": []
+    }
+  },
+  "mcpServers": {
+    "liferay-mcp": {
+      "httpUrl": "$LIFERAY_MCP_URL",
+      "headers": {
+        "Authorization": "Basic $LIFERAY_MCP_BASIC_AUTH"
+      }
     }
   }
-  
-
 }

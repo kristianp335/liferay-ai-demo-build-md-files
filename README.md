@@ -61,6 +61,14 @@ To enable Shirley's full capabilities, you should configure your `settings.json`
       "sessionMode": "persistent",
       "visualModel": "gemini-2.5-computer-use-preview-10-2025"
     }
+  },
+  "mcpServers": {
+    "liferay-mcp": {
+      "httpUrl": "$LIFERAY_MCP_URL",
+      "headers": {
+        "Authorization": "Basic $LIFERAY_MCP_BASIC_AUTH"
+      }
+    }
   }
 }
 ```
@@ -69,6 +77,9 @@ To enable Shirley's full capabilities, you should configure your `settings.json`
 - **`context`**: Ensure `WHO_YOU_ARE.md` is included so Shirley always remembers her persona and protocols.
 - **`experimental`**: Must be `true` to allow Shirley to use sub-agents for complex tasks.
 - **`browser`**: Setting `sessionMode` to `persistent` allows Shirley to stay logged into your Liferay instance across different tasks.
+- **`mcpServers`**: Registers the `liferay-mcp` server. Ensure that your system environment has the following variables configured (typically in a `.env` file or global system environment):
+  - `LIFERAY_MCP_URL`: Point to your Liferay MCP servlet path (e.g., `https://<your-domain>/o/mcp`).
+  - `LIFERAY_MCP_BASIC_AUTH`: Your Base64-encoded `username:password` string for authentication.
 
 ---
 
@@ -77,7 +88,7 @@ To enable Shirley's full capabilities, you should configure your `settings.json`
 Shirley uses the [generate-images](./.gemini/skills/generate-images/SKILL.md) skill to create professional-grade assets (Hero backgrounds, product thumbnails, avatars) so your demos never look like "empty templates."
 
 ### How the Key Works:
-1.  **API Key**: This skill requires a Google API Key with access to the **Imagen 4** model.
+1.  **API Key**: This skill requires a Google API Key with access to the **Gemini Flash 3.1** model.
 2.  **Environment Variable**: Store your key in your system's environment variables as `GEMINI_API_KEY` (or `NANOBANANA_GEMINI_API_KEY`).
 3.  **Automatic Detection**: Shirley's Python scripts are configured to automatically pick up this key from your environment to securely generate thumbnails for new Fragments.
 
