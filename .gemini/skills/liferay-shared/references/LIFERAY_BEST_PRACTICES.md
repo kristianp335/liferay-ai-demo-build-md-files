@@ -338,3 +338,36 @@ function initializeFragment() {
     // Standard initialization for live mode...
 }
 ```
+
+## 11. Localization and Rendering in FreeMarker Content Templates
+
+When rendering nested or referenced Journal Articles (Web Content) dynamically within a parent FreeMarker Content Template, you must explicitly handle localization to support Liferay's language selector.
+
+### The Nested Language Rendering Problem
+By default, standard rendering tags like `<@liferay_journal["journal-article"]>` will render target articles using their own default language, or the site's default language. They do not automatically inherit the current request's active language unless instructed.
+
+### Correct Localization Implementation
+To ensure nested articles change languages dynamically when the Liferay language selector is toggled, always pass the active locale string (formatted as `ll_CC` e.g., `en_US`) to the `languageId` parameter.
+
+#### Method 1: Using the Implicit `locale` Variable (Recommended)
+Liferay injects a `java.util.Locale` object named `locale` into Web Content FreeMarker templates:
+```freemarker
+<@liferay_journal["journal-article"]
+    articleId = article.getArticleId()
+    ddmTemplateKey = tpl
+    groupId = article.getGroupId()
+    languageId = locale.toString()
+/>
+```
+
+#### Method 2: Using the `themeDisplay` Object
+If you prefer to pull the ID directly from the active `themeDisplay` context:
+```freemarker
+<@liferay_journal["journal-article"]
+    articleId = article.getArticleId()
+    ddmTemplateKey = tpl
+    groupId = article.getGroupId()
+    languageId = themeDisplay.getLanguageId()
+/>
+```
+```
