@@ -178,6 +178,14 @@ This is a common, multi-faceted error that can prevent fragment collections from
                 ```
                 In this correct approach, `myButtonLink` handles both the URL and the text, without needing corresponding configuration fields.
 
+4.  **Fragment Overwrite Failures (Missing Icons/Thumbnails or Flat ZIP)**:
+    *   **Problem**: You can successfully upload a fragment collection once, but subsequent uploads fail to overwrite the existing fragments, especially when updating resources. This is caused by two overlapping strict requirements:
+        1. The ZIP archive was built as a "flat" structure instead of being nested under a root `collection-name/` directory. Liferay ignores `resources/` folders at the bare root of the archive during overwrites.
+        2. One or more fragments is missing a visual fallback indicator. Liferay rejects overwriting a fragment if it lacks both a `thumbnailPath` (with the physical `thumbnail.png` file present) AND an `"icon"` property in its `fragment.json`.
+    *   **Solution**:
+        *   **ZIP Structure**: Ensure the Python script creating the `.zip` file prepends the collection name to every `arcname` (e.g., `arcname = f"{collection_name}/resources/{file}"`).
+        *   **Fragment Manifest**: If you do not have a physical `thumbnail.png` for a fragment, you **must** add a generic icon property (e.g., `"icon": "picture"`, `"icon": "users"`, `"icon": "page-header"`) to its `fragment.json`. If this is omitted, Liferay silently fails the overwrite validation.
+
 ---
 
 ### 6. Working with Liferay Commerce Context
