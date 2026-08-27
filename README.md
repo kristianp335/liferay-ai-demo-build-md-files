@@ -16,7 +16,7 @@ npm install -g @google/gemini-cli
 ```
 
 ### 2. "Hire" Shirley (Installation)
-To give the Gemini CLI "Shirley's expertise," copy the `.gemini` folder from this repository into the root of your Liferay Workspace:
+To give the Gemini CLI "Shirley's expertise," copy the `.gemini` folder from this repository into the root of your Liferay Workspace and also the `WHO_YOU_ARE.md` file: 
 
 ```bash
 # In your workspace root

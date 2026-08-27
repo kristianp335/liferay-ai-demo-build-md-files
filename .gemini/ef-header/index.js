@@ -270,22 +270,29 @@
             return;
         }
         
-        const apiUrl = `/o/headless-delivery/v1.0/navigation-menus/${menuId}?nestedFields=true&p_auth=${Liferay.authToken}`;
-        
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                renderNavigationFromAPI(data.navigationMenuItems || []);
-            })
-            .catch(error => {
-                // Error loading navigation menu
-                loadFallbackNavigation();
-            });
+        const siteId = themeDisplay.getSiteGroupId();
+        const navApiUrl = `/o/headless-delivery/v1.0/navigation-menus/${menuId}?nestedFields=true&p_auth=${Liferay.authToken}`;
+        const pagesApiUrl = `/o/headless-delivery/v1.0/sites/${siteId}/site-pages?p_auth=${Liferay.authToken}`;
+
+        Promise.all([
+            fetch(navApiUrl).then(res => res.ok ? res.json() : { navigationMenuItems: [] }),
+            fetch(pagesApiUrl).then(res => res.ok ? res.json() : { items: [] })
+        ])
+        .then(([navData, pagesData]) => {
+            const pagesMap = {};
+            if (pagesData && pagesData.items) {
+                pagesData.items.forEach(page => {
+                    if (page.uuid) {
+                        pagesMap[page.uuid] = page;
+                    }
+                });
+            }
+            renderNavigationFromAPI(navData.navigationMenuItems || [], pagesMap);
+        })
+        .catch(error => {
+            console.error("Error loading navigation", error);
+            loadFallbackNavigation();
+        });
     }
 
     /**
@@ -334,31 +341,44 @@
     /**
      * Render navigation from API response
      */
-    function renderNavigationFromAPI(menuItems) {
+    function renderNavigationFromAPI(menuItems, pagesMap) {
         const config = getFragmentConfiguration();
-        const sitePrefix = config.sitePrefix;
-        
+        const sitePrefix = config.sitePrefix || '';
+
         // Transform API structure to internal format
-        const navItems = menuItems.map(item => transformAPINavItem(item, sitePrefix));
+        const navItems = menuItems.map(item => transformAPINavItem(item, sitePrefix, pagesMap));
         renderNavigation(navItems);
     }
 
     /**
      * Transform API navigation item to internal format
      */
-    function transformAPINavItem(item, sitePrefix) {
-        const navItem = {
-            name: item.name || item.title || 'Unnamed',
-            url: addSitePrefix(item.link || item.url || '#', sitePrefix)
-        };
+    function transformAPINavItem(item, sitePrefix, pagesMap) {
+        let url = item.link || item.url || '#';
+        let name = item.name || item.title || 'Unnamed';
         
+        // If it's a layout/page, look up the URL from pagesMap
+        if (item.type === 'layout' && item.typeSettings && item.typeSettings.externalReferenceCode) {
+            const page = pagesMap[item.typeSettings.externalReferenceCode];
+            if (page) {
+                if (url === '#') url = page.friendlyUrlPath || url;
+                // Prefer page title if item name is missing or 'Unnamed'
+                if (name === 'Unnamed' && page.title) name = page.title;
+            }
+        }
+
+        const navItem = {
+            name: name,
+            url: addSitePrefix(url, sitePrefix)
+        };
+
         // Handle children
         if (item.navigationMenuItems && item.navigationMenuItems.length > 0) {
-            navItem.children = item.navigationMenuItems.map(child => transformAPINavItem(child, sitePrefix));
+            navItem.children = item.navigationMenuItems.map(child => transformAPINavItem(child, sitePrefix, pagesMap)); 
         } else if (item.children && item.children.length > 0) {
-            navItem.children = item.children.map(child => transformAPINavItem(child, sitePrefix));
+            navItem.children = item.children.map(child => transformAPINavItem(child, sitePrefix, pagesMap));
         }
-        
+
         return navItem;
     }
 
