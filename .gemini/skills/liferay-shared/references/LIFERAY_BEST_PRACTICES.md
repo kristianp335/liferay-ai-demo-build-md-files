@@ -107,6 +107,13 @@ This HTML attribute makes an element directly editable by a content editor. Each
 **Avoiding Redundant Configuration Fields:**
 If an HTML element has `data-lfr-editable-id` and `data-lfr-editable-type` attributes, its content (e.g., text, link URL, image source) **does not need to be duplicated as a configurable field in `configuration.json`**. The default value for that editable content should be provided directly in the `index.html`. Liferay's UI will handle allowing content editors to change this content directly on the page or through the fragment editor.
 
+**Mandatory Unique IDs on Links and Buttons (A/B Testing & Click-Tracking):**
+To ensure full compatibility with Liferay's native A/B testing, conversion goals, click-tracking, and web analytics, every link element (`<a>`) and interactive button inside a page fragment **must always carry a unique, stable `id` attribute**. If an `id` attribute is missing, Liferay's campaign engine cannot uniquely identify the target of the click, causing A/B tests and conversion trackings to fail silently.
+*Correct Example:*
+```html
+<a id="solara-hero-primary-cta" class="btn btn-primary" data-lfr-editable-id="cta-link" data-lfr-editable-type="link" href="#">Explore Kits</a>
+```
+
 **For a complete list of valid editable types, see [LFR_EDITABLE_TYPES.md](LFR_EDITABLE_TYPES.md).**
 
 ### Fragment Drop Zones (`lfr-drop-zone`)
