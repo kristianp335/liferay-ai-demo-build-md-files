@@ -36,16 +36,47 @@ When triggered to create Liferay fragment(s) from Figma:
 3. **Parse Tree / Visual Structure & Mapping Rules**:
    - Translate layout nodes or visual regions into structured, semantic HTML:
      - Auto-layouts / Grids → Flexbox / Bootstrap Grid (`row`, `col-*`, `d-flex`).
-     - Editable Texts → Wrap text nodes in `<lfr-editable id="unique-text-id" type="text">`.
-     - Editable Images → Wrap image containers in `<lfr-editable id="unique-image-id" type="image"><img src="..." alt="" /></lfr-editable>`.
-     - Action Links / Buttons → Wrap in `<lfr-editable id="unique-link-id" type="link"><a href="#" class="btn btn-primary">...</a></lfr-editable>`.
+     - **Editable Elements (Modern Liferay Attribute Syntax)**:
+       Never use the legacy `<lfr-editable>` tag. Instead, always use Liferay's modern `data-lfr-editable-id` and `data-lfr-editable-type` HTML5 attributes directly within standard HTML elements:
+       * **Simple Text (`text`)**: Used for plain text headings, badges, or labels.
+         ```html
+         <span class="badge" data-lfr-editable-id="badge-id" data-lfr-editable-type="text">Limited Time Offer</span>
+         ```
+       * **Rich Text (`rich-text`)**: Used for paragraphs, rich text areas, or complex titles that support inline HTML tags (like `<span>` highlights).
+         ```html
+         <h1 class="hero-title" data-lfr-editable-id="hero-title" data-lfr-editable-type="rich-text">
+           Ready for the <span class="text-solara-orange">long road</span>?
+         </h1>
+         ```
+       * **HTML (`html`)**: Allows the content editor to input raw HTML block content.
+         ```html
+         <div data-lfr-editable-id="raw-html" data-lfr-editable-type="html">
+           <p>Custom HTML section</p>
+         </div>
+         ```
+       * **Images (`image`)**: Placed directly inside the `<img>` tag.
+         ```html
+         <img data-lfr-editable-id="img-id" data-lfr-editable-type="image" src="https://images.unsplash.com/photo-1558981806-ec527fa84c39" alt="TR500" class="img-fluid" />
+         ```
+       * **Action Links / Buttons (`link`)**: Placed directly inside the `<a>` tag.
+         ```html
+         <a class="btn btn-primary" data-lfr-editable-id="cta-link" data-lfr-editable-type="link" href="#">Explore Kits</a>
+         ```
+       * **Date & Time (`date-time`)**: Used to make a date/time string editable with an interactive calendar/clock picker.
+         ```html
+         <time datetime="2026-05-15" data-lfr-editable-id="mdf-date" data-lfr-editable-type="date-time">May 15, 2026</time>
+         ```
+       * **Action Button (`action`)**: Used to trigger customizable object or workflow actions.
+         ```html
+         <button class="btn btn-primary" data-lfr-editable-id="btn-action" data-lfr-editable-type="action">Submit Request</button>
+         ```
 
 4. **Generate Fragment Files**:
    For each fragment, generate the required Liferay files:
 
    - **`index.html`**:
      - HTML5 semantic structure.
-     - Liferay tags (`<lfr-editable>`, FreeMarker tags if dynamic rules apply).
+     - Modern Liferay editable attributes (`data-lfr-editable-id` and `data-lfr-editable-type`), FreeMarker tags if dynamic rules apply.
      - Clay CSS utility classes (`mb-3`, `text-primary`, `btn`, etc.).
 
    - **`styles.css`**:
@@ -93,7 +124,7 @@ When triggered to create Liferay fragment(s) from Figma:
      ```
 
 5. **Validation**:
-   - Verify every `<lfr-editable>` element possesses a unique `id`.
+   - Verify every element with `data-lfr-editable-id` possesses a unique, stable ID across the collection to avoid mapping collisions.
    - Validate `configuration.json` and `fragment.json` against valid JSON syntax.
 
 ## Liferay DXP Technical Constraints & Best Practices
