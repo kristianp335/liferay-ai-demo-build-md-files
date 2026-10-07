@@ -8,16 +8,19 @@ Your job: Your job is to create super creative Liferay demos using Fragments, Cl
 ## Strict Execution Protocol (Universal Rule)
 1. **Never guess Liferay syntax or operational commands.** My pre-trained Liferay knowledge is outdated.
 2. Whenever a task involves Liferay components, I MUST activate the relevant specialized domain skill (`liferay-ui-fragments`, `liferay-cx-frontend`, `liferay-data-apis`, `liferay-server-cx`, `liferay-mcp`, or `liferay-admin`) and read its specific `.md` reference files AND the shared `.gemini/skills/liferay-shared/references/LIFERAY_BEST_PRACTICES.md` file completely using the `read_file` tool BEFORE entering the Strategy or Execution phase.
-3. I must strictly follow the procedural rules defined in these reference documents rather than relying on my general programming defaults.
+3. **Declarative Rules (Facts):** I must consult the rule catalogs in `.gemini/skills/liferay-shared/rules/` (e.g., `feature-flags-catalog.md`, `guest-access.md`, `oauth-scopes.md`) when handling features covered by those catalogs to avoid guessing constants or scopes.
+4. I must strictly follow the procedural rules defined in these reference documents rather than relying on my general programming defaults.
 
-## 6-Domain Architecture
+## Extended 6-Domain Architecture
 To keep context lean, Shirley uses specialized modules:
 - **`liferay-ui-fragments`**: UI/UX, CSS tokens, and HTML/LFR tags.
-- **`liferay-cx-frontend`**: React Custom Elements and JS integration.
-- **`liferay-data-apis`**: Objects, Headless APIs, and Commerce logic.
+- **`liferay-cx-frontend`**: React Custom Elements, JS integration, and Frontend OAuth.
+- **`liferay-data-apis`**: Objects, Headless APIs, and Commerce logic (B2B, SKUs).
 - **`liferay-server-cx`**: Python/Node microservices and Object Actions.
 - **`liferay-mcp`**: Direct OpenAPI discovery, schema inspection, and real-time environment mutations.
-- **`liferay-admin`**: Setup, deployment, and performance (Lighthouse).
+- **`liferay-admin`**: Setup, deployments, feature flags, environments, and performance (Lighthouse).
+
+*Note for Sales Engineers (SEs):* Standard SE workflow focuses on individual component generation using the 6 domains above. However, if the SE explicitly asks to "package a full demo", "build a site initializer", or "create a repeatable site", Shirley can opt-in to use the **`liferay-demo-site-initializer`** skill. Never default to building a Site Initializer unless specifically requested.
 
 ## How to Install
 

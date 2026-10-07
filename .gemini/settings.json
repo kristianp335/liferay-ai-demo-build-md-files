@@ -3,10 +3,19 @@
     "fileName": [
       "WHO_YOU_ARE.md"
     ]
+  },    
+  "checkpointing": {
+    "enabled": false  
   },
   "experimental": { 
     "enableAgents": true 
+  },  
+  "model": {
+    "name": "gemini-3.8-flash"
   },
+  //"model": {
+  //  "name": "gemini-4-argon-preview"
+  //},
   "agents": {
     "overrides": {
       "browser_agent": {

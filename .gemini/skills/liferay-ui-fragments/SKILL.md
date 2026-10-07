@@ -12,6 +12,7 @@ This skill provides expert procedural knowledge for developing high-quality Life
 - **Building Fragments**: Follow best practices for HTML structure, CSS scoping, and JavaScript initialization.
 - **Configuration & Editability**: Define robust `configuration.json` schemas and make content editable using `data-lfr-editable` attributes.
 - **Styling with Tokens**: Map fragment CSS variables to Liferay Classic theme CSS tokens for site-wide brand consistency.
+- **Theme & Design**: Configure master pages, style books, and themeCSS client extensions.
 
 ## STRICT EXECUTION PROTOCOL (MANDATORY READS)
 
@@ -22,7 +23,8 @@ You MUST NOT rely on pre-existing Liferay knowledge. You MUST use the `read_file
 - **Fragment Editability**: Read **[FRAGMENT_LFR_EDITABLE_TYPES.md](references/FRAGMENT_LFR_EDITABLE_TYPES.md)** for `data-lfr-editable-type` mapping.
 - **Configuration Types**: Read **[FRAGMENT_LFR_CONFIGURATION_TYPES.md](references/FRAGMENT_LFR_CONFIGURATION_TYPES.md)** for `configuration.json` schemas.
 - **Styling Tokens**: Read **[LIFERAY_CORE_STYLEBOOK_CLASSIC_CSS_TOKENS.md](references/LIFERAY_CORE_STYLEBOOK_CLASSIC_CSS_TOKENS.md)** for brand-aligned CSS variables.
-- **Form Fragments**: Read **[LIFERAY_FORM_FRAGMENT_GUIDE.md](references/LIFERAY_FORM_FRAGMENT_GUIDE.md)** when working with forms.
+- **Form Fragments**: Read **[LIFERAY_FORM_FRAGMENT_GUIDE.md](references/LIFERAY_FORM_FRAGMENT_GUIDE.md)** and **[MANAGE_FORM_CONTAINERS_GUIDE.md](references/MANAGE_FORM_CONTAINERS_GUIDE.md)** when working with forms, input bindings, and gating content.
+- **Theme & Design**: Read **[THEME_AND_DESIGN_GUIDE.md](references/THEME_AND_DESIGN_GUIDE.md)** for master pages, style books, and global site styling.
 
 ### Component-Specific Documentation
 - **[HEADER_DOCUMENTATION.md](references/HEADER_DOCUMENTATION.md)**: Architecture for the site header.

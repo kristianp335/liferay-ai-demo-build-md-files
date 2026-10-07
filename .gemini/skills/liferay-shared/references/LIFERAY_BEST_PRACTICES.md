@@ -2,6 +2,16 @@
 
 This document consolidates critical best practices and correct procedures for Liferay fragment and client extension development.
 
+## 0. Declarative Rules Catalog (Crucial Fact Data)
+
+Before attempting to guess constants, feature flags, page types, or OAuth scopes, you **must** consult the `.gemini/skills/liferay-shared/rules/` directory. This catalog contains static rules and behaviors required for Liferay:
+- `feature-flags-catalog.md`: Lists required Liferay feature flags.
+- `guest-access.md`: Defines what anonymous users can and cannot see.
+- `oauth-scopes.md`: Headless API scope strings.
+- `page-types.md`, `client-extension-types.md`, `object-actions-catalog.md`, etc.
+
+**Site Initializers:** The `.gemini/skills/liferay-demo-site-initializer` skill is strictly opt-in for Sales Engineers building complete, repeatable demo sites. The format rules are located in `rules/site-initializer-format.md`. Never build a Site Initializer by default.
+
 ## 1. Check for Existing Implementations
 
 Before building a new fragment, especially a complex one like a site header or footer, **always check for an existing implementation in the `.gemini` directory.**
